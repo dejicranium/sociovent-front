@@ -90,7 +90,7 @@
 		<navbar 
 			:toggleModal="toggleModal"
 			:closeModals="closeAllModals"
-			:pageContext="home"
+			:pageContext="'home'"
 		></navbar>
 		
 		<div class="vld-parent" v-if="loadingContent">

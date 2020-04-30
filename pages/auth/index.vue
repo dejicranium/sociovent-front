@@ -1,0 +1,408 @@
+<template>
+	<div class="contain">
+		<div class="contain--1">
+			</div>
+			<div class="auth">
+				<div class="auth__tabs">
+					<div class="auth__tabs__tab" :class="[authMode == 1 ? 'isActive' : '']" @click="switchAuthMode">Log in</div>
+					<div class="auth__tabs__tab" :class="[authMode == 0 ? 'isActive' : '']"   @click="switchAuthMode">Sign Up</div>
+				</div>
+				<div class="auth__signup auth__box" v-if="authMode == 0">
+					<label class="auth__box__label"></label>
+					<label class="auth__box__error" v-if="authErrorMessage">{{ authErrorMessage }}</label>
+
+					<form @submit.prevent="signup">
+						<div class="form__div">
+							<label>Name <label class="red">*</label></label>
+							<input type="text" class="form__control" v-model="signupData.name" placeholder="">
+						</div>
+						<div class="form__div">
+							<label>E-mail address <label class="red">*</label></label>
+
+							<input type="text" class="form__control" v-model="signupData.email" placeholder=""/>
+						</div>
+						<div class="form__div">
+							<label>Username <label class="red">*</label></label>
+
+							<input type="text" class="form__control" v-model="signupData.username" placeholder=""/>
+						</div>
+						<div class="form__div">
+							<label>Password <label class="red">*</label></label>
+
+							<input type="password" class="form__control" v-model="signupData.password" placeholder="">
+						</div>
+						<div class="form__div">
+							<label>Instagram Handle</label>
+
+							<input type="text" class="form__control" v-model="signupData.instagram_handle" placeholder="">
+						</div>
+						<div class="form__div">
+							<label>Twitter Handle</label>
+
+							<input type="text" class="form__control" v-model="signupData.twitter_handle" placeholder="">
+						</div>
+						<div class="form__div">
+							<input type="submit" class="form__control form__control__submit" value="Sign Up">
+						</div>
+
+					</form>
+
+				</div>
+				<div class="auth__signup auth__box" v-else>
+					<label class="auth__box__error" v-if="authErrorMessage">{{ authErrorMessage }}</label>
+					<form @submit.prevent="signin">
+						<div class="form__div">
+							<label>Username or email address</label>
+							<input type="text" v-model="loginData.identifier" class="form__control" />
+						</div>
+						<div class="form__div">
+							<label>Password</label>
+							<input type="password" v-model="loginData.password" class="form__control" placeholder="">
+						</div>
+						<div class="form__div">
+							<input type="submit" class="form__control form__control__submit" value="Sign In">
+						</div>
+
+					</form>
+
+				</div>
+				<p class="signin-prompt" v-if="authMode == 0"> Already have an account? <a href="#" @click="switchAuthMode">Sign In</a></p>
+				<p class="signin-prompt" v-else> Don't have an account? <a href="#" @click="switchAuthMode">Sign Up</a></p>
+
+		</div>
+
+			
+	</div>
+</template>
+
+<script>
+import Logo from '~/components/Logo.vue'
+import axios from 'axios'
+import { request, checkAuthStatus } from '../../utils';
+import Cookies from 'js-cookie';
+
+export default {
+	components: {
+		Logo
+	},
+	data() {
+		return {
+			authMode: 1, // 0 = signup, 1=siginin
+			authError: true,
+			authErrorMessage: '',
+			action: '',
+			signupData: {
+				username: '',
+				name: '',
+				instagram_handle: '',
+				twitter_handle: '',
+				email: '',
+				password: '',
+			},
+			loginData: {
+				identifier: '',
+				password: '',
+			}
+		}
+	},
+
+	created() {
+		if (checkAuthStatus) {
+			//this.$router.push('/');
+		}
+		
+		this.action = this.$route.query['action']; // get action that should be used after this;
+	},
+	methods: {
+		switchAuthMode() {
+			this.authError = false; // don't show error if there is one already
+			this.authMode = this.authMode ? 0 : 1
+		},
+
+		decideNextPage() {
+			let query = {};
+			if (this.$route.query) {
+				query = this.$route.query;
+			}
+			if (query.goto) {
+				switch(query.goto) {
+					case "event_detail":
+						if (query.pagename) {
+							this.$router.push('/events/' + query.pagename)
+							break;
+						}
+						else {
+
+							this.$router.push('/')
+						}
+				}
+			}
+		},
+
+		validateSignupFields() {
+			const requiredFields = ['username', 'name', 'email', 'password'];
+			let error = 1;
+			for (let i = 0; i < requiredFields.length; i++) {
+				let field = requiredFields[i];
+				if (!this.signupData[field]) {
+					this.authErrorMessage = field + ' is required';
+					error = 0;
+					break;
+				}
+			}
+			return error;
+		},
+		signin() {
+			this.authErrorMessage = '';
+			let queryString = '';
+
+			this.decideNextPage();
+
+			if (this.action) {
+				switch(this.action) {
+					case 'createEvent':
+						queryString = `?action=createEvent`;
+						break;
+					default:
+						queryString = `?action=createEvent`;
+						break;
+				}
+			}
+
+			const data = {
+				identifier: this.loginData.identifier,
+				password: this.loginData.password,
+			}
+
+			request('/auth/signin', 'post', {}, data)
+				.then(resp=> {
+					Cookies.set('socioventtoken', resp.data.data.token)
+					this.$store.commit('auth/setAuthenticated', true);
+					this.$router.push('/' + queryString);
+					
+				})
+				.catch(err=> {
+					this.authError = true;
+					this.authErrorMessage = err.response.data.message
+				})
+
+		},
+
+		signup() {
+			this.authErrorMessage = '';
+			let queryString = '';
+			if (!this.validateSignupFields()) {
+				return;
+			}
+
+			this.decideNextPage();
+
+			if (this.action) {
+				switch(this.action) {
+					case 'createEvent':
+						queryString = `?action=createEvent`;
+						break;
+					default:
+						queryString = `?action=createEvent`;
+						break;
+				}
+			}
+
+
+			const data = {
+				social_links: JSON.stringify({
+					instagram_handle: this.signupData.instagram_handle,
+					twitter_handle: this.signupData.twitter_handle
+				}),
+				username: this.signupData.username,
+				email: this.signupData.email,
+				password: this.signupData.password,
+				name: this.signupData.name
+			}
+
+			request('/auth/signup', 'post', {}, data)
+				.then(resp=> {
+					this.loginData.identifier = this.signupData.username;
+					this.loginData.password = this.signupData.password;
+					this.signin();
+				})
+				.catch(err=> {
+					this.authError = true;
+					this.authErrorMessage = err.response.data.message
+				})
+		}
+		
+	}
+}
+
+</script>
+
+<style lang="scss" scoped>
+$grid-break-5: 1120px;
+$grid-break-4: 830px;
+$grid-break-3: 630px;
+$grid-break-2: 565px;
+$modal-break-1: 760px;
+
+/* Sample `apply` at-rules with Tailwind CSS
+.container {
+  @apply min-h-screen flex justify-center items-center text-center mx-auto;
+}
+*/
+
+* {
+}
+
+.contain {
+	background-size: contain;
+	background-color: black;;
+	margin: 0 auto;
+  	min-height: 100vh;
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	text-align: center;
+
+	&--1{
+		z-index: 400
+	}
+}
+
+.title {
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  display: block;
+  font-weight: 300;
+  font-size: 100px;
+  color: #35495e;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-size: 42px;
+  color: #526488;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+}
+
+.links {
+  padding-top: 15px;
+}
+
+.auth {
+	width: 50%;
+		@media screen and (max-width: $modal-break-1) {
+			width: 80%;
+		}
+
+	&__tabs {
+		background: white;
+		display: flex;
+		justify-content: space-between;
+
+		&__tab {
+			cursor: pointer;
+			color: black;
+			border: 1px solid lightgray;
+			text-align: center;
+			flex: 1 0 50%;
+			padding: 10px;
+			&:hover{ 
+				background: whitesmoke;
+				color: black;
+			}
+		}
+	}
+
+	&__box {
+		border: 1px solid lightgray;
+		border-top: 0px;
+		padding: 30px 20px;
+		background-color: white;
+		box-sizing: border-box;
+		width: 100%;
+		@media screen and (max-width: $modal-break-1) {
+			padding: 30px 10px;
+		}
+    
+		&__label {
+			color: black;
+			margin-bottom: 20px;
+			display: block;
+			font-size: 20px;
+		}
+
+		&__error {
+			font-size: 12px;
+			color: red;
+			margin-bottom: 5px;
+			display: block;
+		}
+	}
+}
+
+.form {
+	&__div {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 10px;
+		margin-bottom: 20px;
+
+		label {
+		color: #5e6c84;
+
+		font-size: 12px;
+		}
+	}
+	&__label {
+		color: #5e6c84;
+
+		font-size: 14px;
+		font-weight: bold;
+	}
+	&__control {
+		border: none;
+		width: 100%;
+		margin:auto;
+		border: 1px solid lightgrey;
+		padding: 10px 0px 10px 10px;
+		font-size: 12px;
+		min-width: 200px;
+		border-radius: 5px;
+		outline-color: #dfe1e6;
+
+		&__submit {
+			border: 2px solid #ffffe6;
+			color: #ffffe6;
+			font-weight: bold;;
+			background: black;
+			&:hover {
+				background-color: black;;
+				color: white;
+				font-weight: bold;;
+
+			}
+		}
+	}
+}
+.signin-prompt {
+	margin-top: 10px;
+	color: white;
+	font-weight: normal;
+	font-size: 13px;
+
+	a {
+		text-decoration: underline;
+	}
+}
+
+.isActive {
+	background: black;
+	color: white;
+}
+.red {
+	color: rgb(151, 144, 144);
+}
+</style>

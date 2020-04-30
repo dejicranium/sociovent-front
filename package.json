@@ -1,0 +1,37 @@
+{
+  "name": "sociovent",
+  "version": "1.0.0",
+  "description": "My primo Nuxt.js project",
+  "author": "Deji Atoyebi",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.10.0",
+    "@nuxtjs/toast": "^3.3.0",
+    "axios": "^0.19.2",
+    "cloudinary": "^1.21.0",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.24.0",
+    "multer": "^1.4.2",
+    "node-sass": "^4.13.1",
+    "nuxt": "^2.0.0",
+    "sass-loader": "^8.0.2",
+    "vue-authenticate": "^1.4.1",
+    "vue-axios": "^2.1.5",
+    "vue-date-pick": "^1.3.0",
+    "vue-loading-overlay": "^3.3.2",
+    "vue-toasted": "^1.1.28",
+    "vue2-timepicker": "^1.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9",
+    "@nuxtjs/tailwindcss": "^1.0.0"
+  }
+}

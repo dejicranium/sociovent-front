@@ -302,7 +302,7 @@ export default {
 
 			const xhr = new XMLHttpRequest();
 			xhr.responseType = 'json';
-			const url = 'http://localhost:1220/api/v1/events';
+			const url = 'http://sciovent-api.herokuapp.com/api/v1/events';
 			// log response
 			xhr.onload = () => {
 				toggleButtonActiveness(e.target, btnOriginalText);

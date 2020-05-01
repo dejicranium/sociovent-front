@@ -48,7 +48,7 @@
 			<a @click="toggleShareMenu" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Share</a>
 			<a @click="setEventToRemind(event)" v-if="event.reminders && !event.reminders.length" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Set Reminder</a>
 
-			<a @click="setEventToRemind(event)"  href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Send Sponsorship Request</a>
+			<a @click="setEventToRemind(event)"  href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Set reminder</a>
 			<a @click="bookmark" v-if="event.bookmarks && !event.bookmarks.length" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Bookmark</a>
 		</div>
 		
@@ -231,10 +231,12 @@ $grid-break-2: 565px;
 	position: relative;
 
 			@media screen and (max-width: $grid-break-2) {
-                flex: 1 0 55%;
+				flex: 1 0 55%;
+				margin-right: 0;
       		}
 			@media screen and (min-width: $grid-break-2) {
-                flex: 1 0 40%;
+				flex: 1 0 40%;
+				
       		}
 			
 			@media screen and (min-width: $grid-break-3) {

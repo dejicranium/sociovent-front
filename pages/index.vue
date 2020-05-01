@@ -561,7 +561,6 @@ $modal-break-1: 760px;
   display: flex;
   background: #EEEEEE;
   flex-direction:column;
-  overflow: scroll;
 
 }
 

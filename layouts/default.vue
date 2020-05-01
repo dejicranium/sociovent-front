@@ -27,6 +27,7 @@ html {
 .stuff {
   background-color: #EEEEEE;
   height: 100vh;
+  overflow:scroll;
 }
 
 .button--green {

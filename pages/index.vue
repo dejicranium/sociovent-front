@@ -105,7 +105,6 @@
 
 		<div v-else style="position: relative; z-index: 1;top:60px; margin:auto; " class="content">
 			<div class="filter-indicator" @click="toggleFilter" v-if="!openFilter"> 
-				
 				<svg class="filter-indicator__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="42" viewBox="0 0 50 42"><defs><style>.cls-1{fill:#111}.cls-2{fill:#00c569}</style></defs><title>Options</title><g id="Layer_2" data-name="Layer 2"><g id="Options"><path class="cls-1" d="M40.5 12h7a2.5 2.5 0 0 0 0-5h-7a2.5 2.5 0 0 0 0 5zM15.5 7h-13a2.5 2.5 0 0 0 0 5h13a2.5 2.5 0 0 0 0-5zM9.5 30h-7a2.5 2.5 0 0 0 0 5h7a2.5 2.5 0 0 0 0-5zM47.5 30h-13a2.5 2.5 0 0 0 0 5h13a2.5 2.5 0 0 0 0-5z"/><g><path class="cls-2" d="M18.5 23a9.5 9.5 0 1 0 9.5 9.5 9.5 9.5 0 0 0-9.5-9.5zm0 14a4.5 4.5 0 1 1 4.5-4.5 4.51 4.51 0 0 1-4.5 4.5zM31.5 0A9.5 9.5 0 1 0 41 9.5 9.5 9.5 0 0 0 31.5 0zm0 14A4.5 4.5 0 1 1 36 9.5a4.51 4.51 0 0 1-4.5 4.5z"/></g></g></g></svg>
 			</div>
 			<events-filter :filterMethod='filterEvents' :show="openFilter" :closeMethod="toggleFilter" :filter="filter"></events-filter>
@@ -149,6 +148,7 @@
 </template>
 
 <script>
+
 import Logo from '~/components/Logo.vue'
 import SocialAuth from '~/components/socialauth.vue';
 import Event from '~/components/event.vue';
@@ -178,6 +178,17 @@ import utils from '../utils'
 //import 'vue-loading-overlay/dist/vue-loading.css';
 //import Loading from 'vue-loading-overlay';
 // Import stylesheet
+
+if (process.client) {
+
+	window.addEventListener('scroll', showFilterIndicator);
+}
+
+
+function showFilterIndicator() {
+	const indicator = document.getElementsByClassName('.filter-indicator')[0];
+	console.log(window.scrollY);
+}
 
 export default {
   components: {
@@ -429,7 +440,7 @@ export default {
 
 			const xhr = new XMLHttpRequest();
 			xhr.responseType = 'json';
-			const url = 'process.env.baseUrl/events';
+			const url = process.env.baseUrl + '/events';
 			// log response
 			xhr.onload = () => {
 				toggleButtonActiveness(e.target, btnOriginalText);

@@ -253,6 +253,9 @@ $break-point-1: 860px;
         border-radius: 3px;
 	    border: 1px solid #dfe1e6;
 
+            @media screen and (max-width: $break-point-1) {
+                width: 90%;
+            }
     }
     &__event{ 
 
@@ -282,7 +285,7 @@ $break-point-1: 860px;
         }
 
         &__action {
-            border: 1px solid lightgrey;
+            border: 1px solid #dfe1e6 ;
             margin-bottom: 20px;
 
             @media screen and (max-width: $break-point-1) {

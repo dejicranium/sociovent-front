@@ -12,5 +12,9 @@ module.exports = {
     changePassword: async (data) => {
         return await request('/auth/password/change', 'put', {}, data)
 
+    },
+    logout: async () => {
+        return await request('/auth/signout', 'post', {})
+
     }
 }

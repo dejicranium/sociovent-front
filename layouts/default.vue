@@ -26,6 +26,7 @@ html {
 
 .stuff {
   background-color: #EEEEEE;
+  height: 100vh;
 }
 
 .button--green {

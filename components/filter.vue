@@ -91,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 $break-small: 485px;
- 
+
 .filter {
 	
 	background: rgb(255, 255, 230);

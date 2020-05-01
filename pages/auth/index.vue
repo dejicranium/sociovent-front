@@ -106,11 +106,11 @@ export default {
 		}
 	},
 
-	created() {
-		if (checkAuthStatus) {
-			//this.$router.push('/');
-		}
-		
+	async created() {
+		let authStatus = await checkAuthStatus();
+		if (authStatus) {
+			//this.$router.push('/')
+		}		
 		this.action = this.$route.query['action']; // get action that should be used after this;
 	},
 	methods: {
@@ -178,7 +178,13 @@ export default {
 				.then(resp=> {
 					Cookies.set('socioventtoken', resp.data.data.token)
 					this.$store.commit('auth/setAuthenticated', true);
-					this.$router.push('/' + queryString);
+					if (queryString) {
+
+						this.$router.push('/' + queryString);
+					}
+					else {
+						this.$router.push('/')
+					}
 					
 				})
 				.catch(err=> {
@@ -255,7 +261,7 @@ $modal-break-1: 760px;
 
 .contain {
 	background-size: contain;
-	background-color: black;;
+	background-color: whitesmoke;;
 	margin: 0 auto;
   	min-height: 100vh;
   	display: flex;

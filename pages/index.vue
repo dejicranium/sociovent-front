@@ -429,8 +429,9 @@ export default {
 				this.getEvents();			
 			};
 
-			xhr.onerror = () => {
+			xhr.onerror = (err) => {
 				toggleButtonActiveness(e.target, btnOriginalText);
+				alert(err)
 			}
 
 			// create and send the reqeust
@@ -685,7 +686,6 @@ $modal-break-1: 760px;
 
 	&__mask {
 		background: rgba(0, 0, 0, 0.726);
-		height: 100vh;
 		padding-top: 30px;
 		position: relative;
 		width: 100%;
@@ -750,14 +750,14 @@ $modal-break-1: 760px;
 
 			&__input {
 				font-size: 13px;
-				padding: 7px 10px;
+				padding: 12px 10px;
 				border-radius: 5px;
 				outline: teal;
-				background-color: #f4f5f7 !important;
-   			 	border: 1px solid #dfe1e6 !important;
-
+				//background-color: #f4f5f7 !important;
+   			 	//border: 1px solid #dfe1e6 !important;
+				border: 1px solid lightgrey;
 				input {
-					background: #f4f5f7 !important;
+					//background: #f4f5f7 !important;
 				}
 				&:active {
 					background: white;
@@ -828,6 +828,9 @@ input:focus {
 	font-size: 13px;
 	height: 100%;
 
+}
+select {
+	background: white;
 }
 .vdpWithInput {
 	height: 100%;

@@ -29,13 +29,14 @@
       <nuxt-link to="/bookmarks" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Bookmarks</nuxt-link>
       <nuxt-link to="/reminders" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Reminders</nuxt-link>
       <nuxt-link to="/settings" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Settings</nuxt-link>
-      <nuxt-link to="/" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Sign out</nuxt-link>
+      <a @click="signout" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Sign out</a>
     </div>
   </div>
 </template>
 
 <script>
 import { request, checkAuthStatus, toggleButtonActiveness } from '../utils';
+import requests from '../requests/auth';
 
 export default {
     props: ['toggleModal', 'closeModals', 'pageContext'],
@@ -62,6 +63,15 @@ export default {
   methods: {
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
+    },
+    async signout() {
+      await requests.logout().then(resp=> {
+        this.isAuthenticated = false;
+        this.showDropdown = false
+      })
+      .catch(err => {
+        
+      })
     }
   }
 

@@ -258,10 +258,11 @@ $break-point-1: 860px;
             }
     }
     &__event{ 
+        border-radius: 10px;
 
         &__image {
             border-radius: 10px;
-            background-color:lightgrey;
+            background-color:white;
             position: relative;
             height: 600px;
 
@@ -418,7 +419,7 @@ $break-point-1: 860px;
     &__photo {
         margin-right: 10px;
 	    flex: 1 0 40%;
-        background: rgba(0, 0, 0, 0.322);
+        background: whitesmoke;
 
         @media screen and (max-width: $break-point-1) {
             width: 100%;

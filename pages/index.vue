@@ -419,7 +419,7 @@ export default {
 
 			const xhr = new XMLHttpRequest();
 			xhr.responseType = 'json';
-			const url = 'https://sociovent-api.herokuapp.com/api/v1/events';
+			const url = 'http://localhost:1220/api/v1/events';
 			// log response
 			xhr.onload = () => {
 				toggleButtonActiveness(e.target, btnOriginalText);

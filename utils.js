@@ -15,7 +15,7 @@ module.exports = {
        }
     },
 
-    async request(url, method, headers={}, data={},query={}, pageMeta={},  baseUrl='https://sociovent-api.herokuapp.com/api/v1',) {
+    async request(url, method, headers={}, data={},query={}, pageMeta={},  baseUrl='http://localhost:1220/api/v1',) {
         let queryString = ''
 
         if (query) {

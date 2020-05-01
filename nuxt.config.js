@@ -4,7 +4,7 @@ const baseURL = 'https://sociovent-api.herokuapp.com/v1/api/'
 module.exports = {
   mode: 'universal',
   env: {
-    baseUrl: process.env.BASE_URL || 'http://locahost:1220/api/v1'
+    baseUrl: process.env.BASE_URL || 'http://localhost:1220/api/v1'
   },
   /*
   ** Headers of the page
@@ -17,7 +17,10 @@ module.exports = {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: '/vue-loading.css' },
+      { rel: 'stylesheet', href: '/vueDatePick.css' },
+      { rel: 'stylesheet', href: '/VueTimepicker.css' }
     ]
   },
   /*

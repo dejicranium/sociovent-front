@@ -158,7 +158,7 @@ export default {
 			const original_text= e.target.innerText;
 
 			this.decideNextPage();
-			this.toggleButtonActiveness(e.target, original_text)
+			toggleButtonActiveness(e.target, original_text)
 
 			if (this.action) {
 				switch(this.action) {
@@ -178,7 +178,7 @@ export default {
 
 			request('/auth/signin', 'post', {}, data)
 				.then(resp=> {
-					this.toggleButtonActiveness(e.target, original_text)
+					toggleButtonActiveness(e.target, original_text)
 
 					Cookies.set('socioventtoken', resp.data.data.token)
 					this.$store.commit('auth/setAuthenticated', true);
@@ -187,7 +187,7 @@ export default {
 						this.$router.push('/' + queryString);
 					}
 					else {
-						this.toggleButtonActiveness(e.target, original_text)
+						toggleButtonActiveness(e.target, original_text)
 						this.$router.push('/')
 					}
 					
@@ -203,7 +203,7 @@ export default {
 			this.authErrorMessage = '';
 			let queryString = '';
 			const original_text = e.target.innerText;
-			this.toggleButtonActiveness(e.target, original_text)
+			toggleButtonActiveness(e.target, original_text)
 
 			if (!this.validateSignupFields()) {
 				return;
@@ -239,11 +239,11 @@ export default {
 					this.loginData.identifier = this.signupData.username;
 					this.loginData.password = this.signupData.password;
 					this.signin();
-					this.toggleButtonActiveness(e.target, original_text)
+					toggleButtonActiveness(e.target, original_text)
 
 				})
 				.catch(err=> {			
-					this.toggleButtonActiveness(e.target, original_text)
+					toggleButtonActiveness(e.target, original_text)
 					this.authError = true;
 					this.authErrorMessage = err.response.data.message
 				})

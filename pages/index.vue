@@ -154,15 +154,20 @@ import SocialAuth from '~/components/socialauth.vue';
 import Event from '~/components/event.vue';
 import Navbar from '~/components/navbar.vue';
 import EventsFilter from '~/components/filter.vue';
-import DatePick from 'vue-date-pick';
+//import DatePick from 'vue-date-pick';
 import ReminderModal from '~/components/remindermodal.vue';
+/*
 import '~/static/styles/vue-loading.css'
 import '~/static/styles/vueDatePick.css'
-import '~/static/styles/VueTimepicker.css'
+import '~/static/styles/VueTimepicker.css'*/
 //import 'vue-date-pick/dist/vueDatePick.css';
 //import 'vue2-timepicker/dist/VueTimepicker.css'
+import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
+import Loading from 'vue-loading-overlay/src/js/Component.vue'
+import DatePick from 'vue-date-pick/src/vueDatePick.vue';
+
 import cntries from '../countries.json';
-import VueTimepicker from 'vue2-timepicker';
+//import VueTimepicker from 'vue2-timepicker';
 import axios from 'axios';
 import { request, checkAuthStatus, toggleButtonActiveness, convertObjToQueryString } from '../utils';
 import requests from '../requests/events'
@@ -171,7 +176,7 @@ import Pagination from '~/components/paginator';
 import utils from '../utils'
 // CSS
 //import 'vue-loading-overlay/dist/vue-loading.css';
-import Loading from 'vue-loading-overlay';
+//import Loading from 'vue-loading-overlay';
 // Import stylesheet
 
 export default {
@@ -519,6 +524,7 @@ $grid-break-4: 830px;
 $grid-break-3: 630px;
 $grid-break-2: 565px;
 $modal-break-1: 760px;
+
 
 
 .--red {

@@ -11,12 +11,13 @@
 		<div class="event__bottom">
 			
 			<div class="event__details" v-if="!pageContext || pageContext == 'myevents'">
-				<p class="event__details__text__name events__details__name">{{event.name | uppercase}}</p>
+				<p class="event__details__text__name events__details__name">{{event.name}}</p>
 				<p class="event__details__text"></p>
 					
 				<p class="event__details__text">Venue: {{ event.venue }}</p>
 				<p class="event__details__text">Time: {{event.start_time | normalizeDate}}</p>
 				<p class="event__details__text" v-if="event.user && pageContext !== 'myevents'">Posted by: {{event.user.name}}</p>
+				<p class="event__details__text">Reminders set: {{event.potential_attendees || '0'}}</p>
 			</div>
 
 			<div class="event__details" v-if="pageContext === 'reminders'">

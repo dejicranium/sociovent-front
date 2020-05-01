@@ -285,12 +285,12 @@ $break-point-1: 860px;
         }
 
         &__action {
-            border: 1px solid #dfe1e6 ;
+            border-bottom: 1px solid #dfe1e6 ;
             margin-bottom: 20px;
 
             @media screen and (max-width: $break-point-1) {
                 
-                margin-bottom: 10px;
+                margin-bottom: 15px;
             }
             &__container{ 
 

@@ -4,7 +4,7 @@ const baseURL = 'https://sociovent-api.herokuapp.com/v1/api/'
 module.exports = {
   mode: 'universal',
   env: {
-    baseUrl: process.env.BASE_URL || 'https://sociovent-api.herokuapp.com/api/v1'
+    baseUrl: process.env.BASE_URL || 'http://locahost:1220/api/v1'
   },
   /*
   ** Headers of the page

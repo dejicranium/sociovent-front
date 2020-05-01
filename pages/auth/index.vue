@@ -4,8 +4,8 @@
 			</div>
 			<div class="auth">
 				<div class="auth__tabs">
-					<div class="auth__tabs__tab" :class="[authMode == 1 ? 'isActive' : '']" @click="switchAuthMode">Log in</div>
-					<div class="auth__tabs__tab" :class="[authMode == 0 ? 'isActive' : '']"   @click="switchAuthMode">Sign Up</div>
+					<div class="auth__tabs__tab" :class="[authMode == 1 ? 'isActive' : '']" style="border-right:0" @click="switchAuthMode">Log in</div>
+					<div class="auth__tabs__tab" :class="[authMode == 0 ? 'isActive' : '']"   style="border-lefts:0" @click="switchAuthMode">Sign Up</div>
 				</div>
 				<div class="auth__signup auth__box" v-if="authMode == 0">
 					<label class="auth__box__label"></label>
@@ -78,7 +78,7 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import axios from 'axios'
-import { request, checkAuthStatus } from '../../utils';
+import { request, checkAuthStatus, toggleButtonActiveness } from '../../utils';
 import Cookies from 'js-cookie';
 
 export default {
@@ -152,11 +152,13 @@ export default {
 			}
 			return error;
 		},
-		signin() {
+		signin(e) {
 			this.authErrorMessage = '';
 			let queryString = '';
+			const original_text= e.target.innerText;
 
 			this.decideNextPage();
+			this.toggleButtonActiveness(e.target, original_text)
 
 			if (this.action) {
 				switch(this.action) {
@@ -176,6 +178,8 @@ export default {
 
 			request('/auth/signin', 'post', {}, data)
 				.then(resp=> {
+					this.toggleButtonActiveness(e.target, original_text)
+
 					Cookies.set('socioventtoken', resp.data.data.token)
 					this.$store.commit('auth/setAuthenticated', true);
 					if (queryString) {
@@ -183,6 +187,7 @@ export default {
 						this.$router.push('/' + queryString);
 					}
 					else {
+						this.toggleButtonActiveness(e.target, original_text)
 						this.$router.push('/')
 					}
 					
@@ -194,9 +199,12 @@ export default {
 
 		},
 
-		signup() {
+		signup(e) {
 			this.authErrorMessage = '';
 			let queryString = '';
+			const original_text = e.target.innerText;
+			this.toggleButtonActiveness(e.target, original_text)
+
 			if (!this.validateSignupFields()) {
 				return;
 			}
@@ -231,8 +239,11 @@ export default {
 					this.loginData.identifier = this.signupData.username;
 					this.loginData.password = this.signupData.password;
 					this.signin();
+					this.toggleButtonActiveness(e.target, original_text)
+
 				})
-				.catch(err=> {
+				.catch(err=> {			
+					this.toggleButtonActiveness(e.target, original_text)
 					this.authError = true;
 					this.authErrorMessage = err.response.data.message
 				})
@@ -298,6 +309,7 @@ $modal-break-1: 760px;
 
 .auth {
 	width: 50%;
+	border-radius: 10px;
 		@media screen and (max-width: $modal-break-1) {
 			width: 80%;
 		}

@@ -15,10 +15,10 @@ async function start () {
   port = 4000;
   await nuxt.ready()
   // Build only in dev mode
-  //if (config.dev) {
+  if (config.dev) {
     const builder = new Builder(nuxt)
     await builder.build()
-  //}
+  }
 
   // Give nuxt middleware to express
   app.use(nuxt.render)

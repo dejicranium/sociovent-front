@@ -91,6 +91,7 @@
 			:toggleModal="toggleModal"
 			:closeModals="closeAllModals"
 			:pageContext="'home'"
+			:signInMethod="signin"
 		></navbar>
 		
 		<div class="vld-parent" v-if="loadingContent">
@@ -155,7 +156,11 @@ import Navbar from '~/components/navbar.vue';
 import EventsFilter from '~/components/filter.vue';
 import DatePick from 'vue-date-pick';
 import ReminderModal from '~/components/remindermodal.vue';
-import 'vue-date-pick/dist/vueDatePick.css';
+import '~/static/styles/vue-loading.css'
+import '~/static/styles/vueDatePick.css'
+import '~/static/styles/VueTimepicker.css'
+//import 'vue-date-pick/dist/vueDatePick.css';
+//import 'vue2-timepicker/dist/VueTimepicker.css'
 import cntries from '../countries.json';
 import VueTimepicker from 'vue2-timepicker';
 import axios from 'axios';
@@ -165,10 +170,9 @@ import Cookies from 'js-cookie';
 import Pagination from '~/components/paginator';
 import utils from '../utils'
 // CSS
-import 'vue2-timepicker/dist/VueTimepicker.css'
+//import 'vue-loading-overlay/dist/vue-loading.css';
 import Loading from 'vue-loading-overlay';
 // Import stylesheet
-import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   components: {
@@ -325,6 +329,7 @@ export default {
 	},
 	  
 	methods: {
+		
 		reloadPage(query) {
 			let homeroute = '/?';
 			window.location.href = homeroute + utils.serialize(query);
@@ -419,7 +424,7 @@ export default {
 
 			const xhr = new XMLHttpRequest();
 			xhr.responseType = 'json';
-			const url = 'https://sociovent-api.herokuapp.com/api/v1/events';
+			const url = 'process.env.baseUrl/events';
 			// log response
 			xhr.onload = () => {
 				toggleButtonActiveness(e.target, btnOriginalText);

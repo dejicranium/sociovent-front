@@ -566,12 +566,13 @@ $modal-break-1: 760px;
 }
 
 .cont2 {
-	width: 98%;
+	//width: 98%;
 	margin: 0 auto;
 	height: 100%;
 	margin-bottom: 30px;
 	margin-top: 20px;
 	display: flex;
+	padding: 0 16px;
 	
 }
 

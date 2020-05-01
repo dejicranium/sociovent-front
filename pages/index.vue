@@ -136,7 +136,7 @@
 
 
 			</div> 
-			<div class="view-more" style="width:50%; max-width: 300px; background: black; padding: 5px; border-radius: 5px; cursor: pointer; margin:auto; margin-bottom: 20px; text-align: center; border: 1px solid black; color: white;">
+			<div v-if="pageMeta.currentPage !== pageMeta.totalPages" class="view-more" style="width:50%; max-width: 300px; background: black; padding: 5px; border-radius: 5px; cursor: pointer; margin:auto; margin-bottom: 20px; text-align: center; border: 1px solid black; color: white;">
 				View More
 			</div>
 			<pagination :pageMeta="pageMeta" :jumpToMethod="changePage"></pagination>

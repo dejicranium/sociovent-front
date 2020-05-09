@@ -248,7 +248,7 @@ export default {
 
         },
         changeAction(name) {
-            this.verifyAuth()
+            //this.verifyAuth()
             this.action[name] = true;
             Object.keys(this.action).forEach(action=> {
                 if (action !== name) {

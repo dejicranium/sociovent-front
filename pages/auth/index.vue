@@ -42,7 +42,7 @@
 							<input type="text" class="form__control" v-model="signupData.twitter_handle" placeholder="">
 						</div>
 						<div class="form__div">
-							<input type="submit" class="form__control form__control__submit" value="Sign Up">
+							<button id="signupButton" type="submit" class="form__control form__control__submit" >Sign up</button>
 						</div>
 
 					</form>
@@ -60,7 +60,7 @@
 							<input type="password" v-model="loginData.password" class="form__control" placeholder="">
 						</div>
 						<div class="form__div">
-							<input type="submit" class="form__control form__control__submit" value="Sign In">
+							<button  id="signinButton" type="submit" class="form__control form__control__submit">Sign in</button>
 						</div>
 
 					</form>
@@ -156,10 +156,12 @@ export default {
 		signin(e) {
 			this.authErrorMessage = '';
 			let queryString = '';
-			const original_text= e.target.innerText;
+			let l = document.getElementById('signinButton');
+
+			const original_text= l.innerText;
 
 			this.decideNextPage();
-			toggleButtonActiveness(e.target, original_text)
+			toggleButtonActiveness(l, original_text)
 
 			if (this.action) {
 				switch(this.action) {
@@ -179,7 +181,6 @@ export default {
 
 			request('/auth/signin', 'post', {}, data)
 				.then(resp=> {
-					toggleButtonActiveness(e.target, original_text)
 
 					Cookies.set('socioventtoken', resp.data.data.token)
 					this.$store.commit('auth/setAuthenticated', true);
@@ -188,7 +189,7 @@ export default {
 						this.$router.push('/' + queryString);
 					}
 					else {
-						toggleButtonActiveness(e.target, original_text)
+						toggleButtonActiveness(l, original_text)
 						this.$router.push('/')
 					}
 
@@ -203,6 +204,7 @@ export default {
 				})
 				.catch(err=> {
 					this.authError = true;
+					toggleButtonActiveness(l, original_text)
 					if (err.response && err.response.data && err.response.data.message) {
 
 						this.authErrorMessage = err.response.data.message
@@ -218,8 +220,9 @@ export default {
 		signup(e) {
 			this.authErrorMessage = '';
 			let queryString = '';
-			const original_text = e.target.innerText;
-			toggleButtonActiveness(e.target, original_text)
+			let l = document.getElementById('signupButton');
+			const original_text = l.innerText;
+			toggleButtonActiveness(l, original_text)
 
 			if (!this.validateSignupFields()) {
 				return;
@@ -227,7 +230,7 @@ export default {
 
 			this.decideNextPage();
 
-			
+
 			
 			const data = {
 				social_links: JSON.stringify({
@@ -245,7 +248,7 @@ export default {
 					this.loginData.identifier = this.signupData.username;
 					this.loginData.password = this.signupData.password;
 					this.signin();
-					toggleButtonActiveness(e.target, original_text)
+					toggleButtonActiveness(l, original_text)
 					if (this.$route.query['action']== 'bookmark' && this.$route.query['event_id']) {
 						eventrequests.bookmarkEvent(this.$route.query['event_id']).then(()=> {
 							//this.event.bookmarks = [0] // just add an item to the list so that bookmarks will stop showing
@@ -255,7 +258,7 @@ export default {
 
 				})
 				.catch(err=> {			
-					toggleButtonActiveness(e.target, original_text)
+					toggleButtonActiveness(l, original_text)
 					this.authError = true;
 					if (err.response && err.response.data && err.response.data.message) {
 

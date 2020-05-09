@@ -455,7 +455,7 @@ $break-point-1: 860px;
             text-align: center;
             background: rgba(0, 0, 0, 0.513);
             font-size: 20px;
-            padding: 30px 0px;
+            padding: 30px 10px;
             color: rgb(216, 213, 213);
         }
         p, a {
@@ -562,6 +562,7 @@ $break-point-1: 860px;
         @media screen and (max-width: $break-point-1) {
             background: white;
             padding-top: 5px;
+            padding:5px;
             align-items: center;
             padding-bottom: 10px;
         }

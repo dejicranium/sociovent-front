@@ -60,7 +60,7 @@
 							<input type="password" v-model="loginData.password" class="form__control" placeholder="">
 						</div>
 						<div class="form__div">
-							<button  id="signinButton" type="button" class="form__control form__control__submit">Sign in</button>
+							<button  @click="signin" id="signinButton" type="button" class="form__control form__control__submit">Sign in</button>
 						</div>
 
 					</form>
@@ -154,16 +154,20 @@ export default {
 			}
 			return error;
 		},
-		signin(e) {
+		signin(from=null) {
 			this.authErrorMessage = '';
 			let queryString = '';
-			let l = document.getElementById('signinButton');
+			let l = null;
+			if (!from) {
 
-			const original_text= l.innerText;
+				l = document.getElementById('signinButton');
+	
+				const original_text= l.innerText;
+	
+				toggleButtonActiveness(l, original_text)
+			}
 
 			this.decideNextPage();
-			toggleButtonActiveness(l, original_text)
-
 			if (this.action) {
 				switch(this.action) {
 					case 'createEvent':
@@ -190,7 +194,10 @@ export default {
 						this.$router.push('/' + queryString);
 					}
 					else {
-						toggleButtonActiveness(l, original_text)
+						if(!from) {
+
+							toggleButtonActiveness(l, original_text)
+						}
 						this.$router.push('/')
 					}
 
@@ -205,7 +212,7 @@ export default {
 				})
 				.catch(err=> {
 					this.authError = true;
-					toggleButtonActiveness(l, original_text)
+					if (!from) toggleButtonActiveness(l, original_text)
 					if (err.response && err.response.data && err.response.data.message) {
 
 						this.authErrorMessage = err.response.data.message
@@ -250,7 +257,7 @@ export default {
 				.then(resp=> {
 					this.loginData.identifier = this.signupData.username;
 					this.loginData.password = this.signupData.password;
-					this.signin();
+					this.signin(true);
 					toggleButtonActiveness(button, original_text)
 					if (this.$route.query['action']== 'bookmark' && this.$route.query['event_id']) {
 						eventrequests.bookmarkEvent(this.$route.query['event_id']).then(()=> {

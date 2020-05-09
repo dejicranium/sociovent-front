@@ -99,7 +99,7 @@ export default {
     head () {
         return {
         title: this.event.name,
-
+        
         meta: [
             {
                 name: 'twitter:title',

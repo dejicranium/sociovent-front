@@ -59,8 +59,6 @@ export default {
   components: {
     Logo,
 	Navbar,
-	EventsFilter,
-	DatePick,
 	SocialAuth,
 	Event,
 	VueTimepicker,

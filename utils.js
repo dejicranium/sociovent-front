@@ -4,7 +4,15 @@ const Cookies = require('js-cookie');
 
 
 module.exports = {
+    
+    googleAnalytics(){
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
+        gtag('config', 'UA-165985781-1');
+    },
     setSessionId(){
         let i  =  '_' + Math.random().toString(36).substr(2, 9) + new Date().toISOString().split('-').join('').split(':').join('').split('.').join('')
         const token = Cookies.get('sociosessionid');

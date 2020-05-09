@@ -4,6 +4,7 @@ const request = utils.request;
 
 module.exports = {
     googleCalendarShareAPI(){
+        
         //const API_URL = "https://calendar.google.com/calendar/r/eventedit?";
         //const description = this.event.description || `${this.event.name} on ${this.event.venue}`;
         //const normalizedStartTime = this.event.start_time.split('-').join('').split('.').join('').split('-').join('').split(':').join('');

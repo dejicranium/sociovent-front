@@ -7,7 +7,7 @@
       <div class="navbar__ctas" style="">
         <a class="block text-sm navbar__ctas__item"  @click="toggleModal" v-if="isAuthenticated && pageContext && pageContext == 'home'" style="margin-right: 20px">Create</a>
         <a  @click="login"  style="cursor:pointer" class="inline-block text-sm navbar__ctas__item" v-if="isAuthenticated === false">Sign In</a>
-        <a  @click="login"  style="cursor:pointer" class="inline-block text-sm navbar__ctas__item" v-if="isAuthenticated === false">Create event</a>
+        <a  @click="login"  style="cursor:pointer" class="inline-block text-sm navbar__ctas__item" v-if="isAuthenticated === false">Create</a>
 
         <div @click="toggleDropdown" v-if="isAuthenticated" class="navbar__ctas__item" >
           <button style="background:white;" class="block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white">

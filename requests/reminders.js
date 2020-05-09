@@ -11,7 +11,7 @@ module.exports = {
         //const query = `text=${this.event.name}&details=${description}&location=${this.event.venue}&dates=${normalizedStartTime}/${normalizedStartTime}`;
         //return API_URL + query;
 
-        return "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.events&response_type=code&client_id=522673690521-i1gabu8t5nqongl8g4idcjjf8v5n9cgl.apps.googleusercontent.com&redirect_uri=https%3A%2F%2F.sociovent.com%2Freminder-stat";
+        return "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.events&response_type=code&client_id=522673690521-i1gabu8t5nqongl8g4idcjjf8v5n9cgl.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fsociovent.com%2Freminder-stat";
 
     },   
     getReminders: async (query=null) => {

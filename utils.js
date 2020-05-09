@@ -4,6 +4,19 @@ const Cookies = require('js-cookie');
 
 
 module.exports = {
+
+    setSessionId(){
+        let i  =  '_' + Math.random().toString(36).substr(2, 9) + new Date().toISOString().split('-').join('').split(':').join('').split('.').join('')
+        const token = Cookies.get('sociosessionid');
+        if (!token) {
+            Cookies.set('sociosessionid', i);
+        }
+    },
+
+    getSessionId() {
+        return Cookies.get('sociosessionid');
+    },
+
     toggleButtonActiveness(btn, original_text) {
        if (btn.disabled === true) {
            btn.innerHTML = original_text
@@ -38,7 +51,7 @@ module.exports = {
     },
 
     checkAuthStatus() {
-        return module.exports.request('/auth/isauthenticated', 'POST')
+        return module.exports.request('/auth/rax', 'POST')
             .then(resp => {
                 return 1
             })

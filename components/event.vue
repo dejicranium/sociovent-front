@@ -46,10 +46,11 @@
 		<div class="mt-2 py-2 w-48 bg-white shadow-xl eventmenu-dropdown" v-if="showMenu && !pageContext" @click.stop>
 			<nuxt-link :to="'/events/' + eventSlug" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">View</nuxt-link>
 			<a @click="toggleShareMenu" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Share</a>
-			<a @click="setEventToRemind(event)" v-if="event.reminders && !event.reminders.length" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Set Reminder</a>
+			<!--<a @click="setEventToRemind(event)" :href="googleCalendarShareAPI" target="blank"  v-if="event.reminders && !event.reminders.length" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Set Reminder</a> -->
 
-			<a @click="setEventToRemind(event)"  href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Set reminder</a>
-			<a @click="bookmark" v-if="event.bookmarks && !event.bookmarks.length" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Bookmark</a>
+			<!--<a @click="setEventToRemind(event)"  href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Set reminder</a> -->
+			<a @click="setEventToRemind(event)"  :href="googleCalendarShareAPI" target="blank" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Set reminder</a>
+			<a @click="bookmark" v-if="typeof(event.bookmarks) === 'undefined' || !event.bookmarks.length" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Bookmark</a>
 		</div>
 		
 		<div class="mt-2 py-2 w-48 bg-white shadow-xl eventmenu-dropdown" v-if="showMenu && pageContext == 'reminders'" @click.stop>
@@ -67,9 +68,8 @@
 
 		<div class="mt-2 py-2 w-48 bg-white shadow-xl sharemenu-dropdown" v-if="showShareMenu" @click.stop>
 			<a @click="copyLink" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Copy Link</a>
-			<a @click="copyLink" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Instagram</a>
-			<a @click="copyLink" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Facebook</a>
-			<a @click="copyLink" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Twitter</a>
+			<a @click="shareSocial('facebook')" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Facebook</a>
+			<a @click="shareSocial('twitter')" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Twitter</a>
 			<a @click="shareSocial('whatsapp')" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Whatsapp</a>
 			
 		</div>
@@ -87,7 +87,11 @@
 <script>
 import moment from 'moment';
 import requests from '../requests/events';
-import { mapActions } from 'vuex'
+import reminderRequests from '../requests/reminders';
+
+import { mapActions } from 'vuex';
+import utils from '../utils';
+
 
 export default {
 	props: ['event', 
@@ -99,6 +103,19 @@ export default {
 	computed: {
 		eventSlug() {
 			return this.event.slug ? this.event.slug : this.event.event.slug;
+		},
+		googleCalendarShareAPI(){
+			//const API_URL = "https://calendar.google.com/calendar/r/eventedit?";
+			//const description = this.event.description || `${this.event.name} on ${this.event.venue}`;
+			//const normalizedStartTime = this.event.start_time.split('-').join('').split('.').join('').split('-').join('').split(':').join('');
+			//const query = `text=${this.event.name}&details=${description}&location=${this.event.venue}&dates=${normalizedStartTime}/${normalizedStartTime}`;
+			//return API_URL + query;
+
+			return reminderRequests.googleCalendarShareAPI();
+
+		},
+		isAuthenticated() {
+			return this.$store.state.auth.isAuthenticated;
 		}
 	},
 	data() {
@@ -115,6 +132,8 @@ export default {
 		editReminder() {
 
 		},
+
+		
 		toggleMenu() {
 			this.showMenu = !this.showMenu;
 		},
@@ -123,7 +142,7 @@ export default {
 		},
 		copyLink() {
 			var textArea = document.createElement("textarea");
-			const text = process.env.baseUrl + '/events/' + this.event.slug;
+			const text = process.env.frontUrl + '/events/' + this.event.slug;
 			textArea.value = text;
 			
 			// Avoid scrolling to bottom
@@ -143,16 +162,21 @@ export default {
 		},
 		shareSocial(platform) {
 			const locals = {};
+			let text, event_url;
 			switch(platform.toLowerCase()) {
 				case 'whatsapp': 
-					let text = 'Chekout ' + this.event.name + ' which will take place on' + this.event.venue;
+					text = 'Set a reminder for ' + this.event.venue + ' event: ' + this.event.name + '. ' + process.env.frontUrl +'/events/'+ this.event.slug ;
 					locals.url = 'whatsapp://send?text=' + text;
 					break;
 				case 'facebook':
-					locals.url = '';
+					text = 'Set a reminder for ' + this.event.venue + ' event: ' + this.event.name + '. ' + process.env.frontUrl +'/events/'+ this.event.slug ;
+					event_url = process.env.frontUrl +'/events/'+ this.event.slug 
+					locals.url = `http://www.facebook.com/sharer.php?u=${event_url}&t=${text}`;
 					break;
 				case 'twitter': 
-					locals.url = '';
+					text = 'Set a reminder for ' + this.event.venue + ' event: ' + this.event.name + '. ' + process.env.frontUrl +'/events/'+ this.event.slug ;
+					event_url = process.env.frontUrl +'/events/'+ this.event.slug 
+					locals.url = `http://twitter.com/share?text=${text}&url=${event_url}&hashtags=sociovent,sociovent,sociovent`;
 					break;
 				default:
 					locals.url = ''
@@ -170,13 +194,23 @@ export default {
 		},
 		bookmark() {
 			const self = this;
+			if (!this.isAuthenticated) {
+				this.$router.push('/auth?action=bookmark&event_id=' + this.event.id);
+				return;
+			}
 			requests.bookmarkEvent(this.event.id).then(()=> {
-				this.event.bookmarks = [0] // just add an item to the list so that bookmarks will stop showing
+				//this.event.bookmarks = [0] // just add an item to the list so that bookmarks will stop showing
 				//self.$toasted.show("Event added to bookmarks");
 			})
 		},
 		setEventToRemind(event) {
-			this.$store.dispatch('events/toggleReminderModal', event )
+			//this.$store.dispatch('events/toggleReminderModal', event );
+			const session_id = utils.getSessionId();
+
+			reminderRequests.setPreReminder({
+				session_id: session_id,
+				event_id: event.id
+			})
 		}
 
 	},
@@ -226,6 +260,7 @@ $grid-break-2: 565px;
 	padding-bottom:15px;
 	box-shadow: 0px 2px 2px rgba(140, 134, 134, 0.25);
     flex: 1 0 19%;
+	//max-width: 19%;
     margin-right: 5px;
     margin-bottom: 15px;
 	position: relative;
@@ -233,21 +268,30 @@ $grid-break-2: 565px;
 			@media screen and (max-width: $grid-break-2) {
 				flex: 1 0 55%;
 				margin-right: 0;
+				//max-width: 55%;
+
       		}
 			@media screen and (min-width: $grid-break-2) {
 				flex: 1 0 40%;
-				
+				//max-width: 40%;
+
       		}
 			
 			@media screen and (min-width: $grid-break-3) {
                 flex: 1 0 25%;
+				//max-width: 25%;
+
       		}
 			@media screen and (min-width: $grid-break-4) {
                 flex: 1 0 20%;
+				//max-width: 20%;
+
 			}
 
 			@media screen and (min-width: $grid-break-5) {
                 flex: 1 0 19%;
+				max-width: 19%;
+
       		}
 
 
@@ -308,7 +352,7 @@ $grid-break-2: 565px;
 			align-items: center;
 			justify-content: center;
 			border-radius: 50%;
-			flex: 0 1 5%;
+			flex: 0 1 10%;
 			z-index: 10000;
 
 			&:hover {

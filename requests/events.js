@@ -3,6 +3,7 @@ const utils = require('../utils')
 const request = utils.request;
 
 module.exports = {
+ 
     getEvents: async (query=null) => {
         
         return await request('/events', 'get', {}, {}, query)
@@ -13,6 +14,14 @@ module.exports = {
         const id = slug_delim[slug_delim.length - 1];
 
         return await request(`/events/${id}`, 'get');
+    },
+
+    setPreReminder: async (data) => {
+        return await request('/reminders/preminder', 'post', {}, data)
+    },
+
+    setGoogleReminder: async (data) => {
+        return await request('/reminders/google-calendar', 'post', {}, data)
     },
 
     getSimilarEvents: async (id) => {

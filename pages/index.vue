@@ -135,7 +135,7 @@
 
 
 			</div> 
-			<div v-if="pageMeta.currentPage !== pageMeta.totalPages" class="view-more" style="width:50%; max-width: 300px; background: black; padding: 5px; border-radius: 5px; cursor: pointer; margin:auto; margin-bottom: 20px; text-align: center; border: 1px solid black; color: white;">
+			<div @click="viewMore" v-if="pageMeta.currentPage !== pageMeta.totalPages" class="view-more" style="width:50%; max-width: 300px; background: black; padding: 5px; border-radius: 5px; cursor: pointer; margin:auto; margin-bottom: 20px; text-align: center; border: 1px solid black; color: white;">
 				View More
 			</div>
 			<pagination :pageMeta="pageMeta" :jumpToMethod="changePage"></pagination>
@@ -154,20 +154,11 @@ import SocialAuth from '~/components/socialauth.vue';
 import Event from '~/components/event.vue';
 import Navbar from '~/components/navbar.vue';
 import EventsFilter from '~/components/filter.vue';
-//import DatePick from 'vue-date-pick';
 import ReminderModal from '~/components/remindermodal.vue';
-/*
-import '~/static/styles/vue-loading.css'
-import '~/static/styles/vueDatePick.css'
-import '~/static/styles/VueTimepicker.css'*/
-//import 'vue-date-pick/dist/vueDatePick.css';
-//import 'vue2-timepicker/dist/VueTimepicker.css'
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 import Loading from 'vue-loading-overlay/src/js/Component.vue'
 import DatePick from 'vue-date-pick/src/vueDatePick.vue';
-
 import cntries from '../countries.json';
-//import VueTimepicker from 'vue2-timepicker';
 import axios from 'axios';
 import { request, checkAuthStatus, toggleButtonActiveness, convertObjToQueryString } from '../utils';
 import requests from '../requests/events'
@@ -305,7 +296,8 @@ export default {
 		}
 	},
 
-	created() {
+	async created() {
+		utils.setSessionId();
 		let query = {};
 		if (this.$route.query) {
 			query = this.$route.query;
@@ -332,7 +324,13 @@ export default {
 			this.filter['to'] = query.to
 		}
 
-		checkAuthStatus();
+		if (!query.country_origin) {
+			query.country_origin = 'NG'
+			this.filter['country_origin'] = 'NG'
+		}
+
+		let authstatus = await checkAuthStatus();
+		this.$store.commit('auth/setAuthenticated', authstatus);
 
 		this.getEvents(query)
 
@@ -345,7 +343,28 @@ export default {
 	},
 	  
 	methods: {
-		
+		max(numbers) {
+			if (numbers) {
+				let highest = numbers[0];
+				numbers.forEach(number=> {
+					if (number > highest) highest = number;
+				})
+				
+				return highest;
+			}
+		},
+		viewMore() {
+			this.getEvents({
+				offset: this.max(this.events.map(event => event.id)),
+				...this.filter,
+				...this.$route.query,
+				//offset: this.events[this.events.length -1].id,
+			}, true)
+			
+		},
+		signin() {
+			this.router.push('/')
+		},
 		reloadPage(query) {
 			let homeroute = '/?';
 			window.location.href = homeroute + utils.serialize(query);
@@ -390,13 +409,29 @@ export default {
 			if (event) this.eventToRemind = event;
 			this.showReminderModal = !this.showReminderModal
 		},
-		getEvents(query=null) {
-			this.loadingContent = true;
+		getEvents(query=null, appendToEvents=null) {
+			if (!appendToEvents) {
+				this.loadingContent = true;
+
+			}
 			const self = this;
 			requests.getEvents(query).then(resp => {
-				self.loadingContent = false;
-				self.events = resp.data.data.events;
-				self.pageMeta = resp.data.data.pageInfo;
+
+				if (!appendToEvents) {
+					self.loadingContent = false;
+					self.events = resp.data.data.events;
+					self.pageMeta = resp.data.data.pageInfo;
+
+				}
+				else {
+					let newevents = resp.data.data.events;
+					if (newevents) {
+						for (let i = 0; i < newevents.length; i++) {
+							let event = newevents[i];
+							self.events.push(event);
+						}
+					}
+				}
 			}).catch(err=> {
 				self.loadingContent = false;
 			})

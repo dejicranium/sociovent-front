@@ -11,7 +11,7 @@
 					<label class="auth__box__label"></label>
 					<label class="auth__box__error" v-if="authErrorMessage">{{ authErrorMessage }}</label>
 
-					<form @submit.prevent="signup">
+					<form  class="form" @submit.prevent="signup">
 						<div class="form__div">
 							<label>Name <label class="red">*</label></label>
 							<input type="text" class="form__control" v-model="signupData.name" placeholder="">
@@ -50,7 +50,7 @@
 				</div>
 				<div class="auth__signup auth__box" v-else>
 					<label class="auth__box__error" v-if="authErrorMessage">{{ authErrorMessage }}</label>
-					<form @submit.prevent="signin">
+					<form class="form" @submit.prevent="signin">
 						<div class="form__div">
 							<label>Username or email address</label>
 							<input type="text" v-model="loginData.identifier" class="form__control" />
@@ -80,6 +80,7 @@ import Logo from '~/components/Logo.vue'
 import axios from 'axios'
 import { request, checkAuthStatus, toggleButtonActiveness } from '../../utils';
 import Cookies from 'js-cookie';
+import eventrequests from '../../requests/events';
 
 export default {
 	components: {
@@ -109,7 +110,7 @@ export default {
 	async created() {
 		let authStatus = await checkAuthStatus();
 		if (authStatus) {
-			//this.$router.push('/')
+			this.$router.push('/')
 		}		
 		this.action = this.$route.query['action']; // get action that should be used after this;
 	},
@@ -190,11 +191,26 @@ export default {
 						toggleButtonActiveness(e.target, original_text)
 						this.$router.push('/')
 					}
+
+					if (this.$route.query['action']== 'bookmark' && this.$route.query['event_id']) {
+						eventrequests.bookmarkEvent(this.$route.query['event_id']).then(()=> {
+							//this.event.bookmarks = [0] // just add an item to the list so that bookmarks will stop showing
+							//self.$toasted.show("Event added to bookmarks");
+						})
+					}
+
 					
 				})
 				.catch(err=> {
 					this.authError = true;
-					this.authErrorMessage = err.response.data.message
+					if (err.response && err.response.data && err.response.data.message) {
+
+						this.authErrorMessage = err.response.data.message
+					}
+					else {
+						this.authErrorMessage =err
+						alert(this.authErrorMessage)
+					}
 				})
 
 		},
@@ -211,18 +227,8 @@ export default {
 
 			this.decideNextPage();
 
-			if (this.action) {
-				switch(this.action) {
-					case 'createEvent':
-						queryString = `?action=createEvent`;
-						break;
-					default:
-						queryString = `?action=createEvent`;
-						break;
-				}
-			}
-
-
+			
+			
 			const data = {
 				social_links: JSON.stringify({
 					instagram_handle: this.signupData.instagram_handle,
@@ -240,12 +246,25 @@ export default {
 					this.loginData.password = this.signupData.password;
 					this.signin();
 					toggleButtonActiveness(e.target, original_text)
+					if (this.$route.query['action']== 'bookmark' && this.$route.query['event_id']) {
+						eventrequests.bookmarkEvent(this.$route.query['event_id']).then(()=> {
+							//this.event.bookmarks = [0] // just add an item to the list so that bookmarks will stop showing
+							//self.$toasted.show("Event added to bookmarks");
+						})
+					}
 
 				})
 				.catch(err=> {			
 					toggleButtonActiveness(e.target, original_text)
 					this.authError = true;
-					this.authErrorMessage = err.response.data.message
+					if (err.response && err.response.data && err.response.data.message) {
+
+						this.authErrorMessage = err.response.data.message
+					}
+					else {
+						this.authErrorMessage =err
+						alert(this.authErrorMessage)
+					}
 				})
 		}
 		
@@ -322,10 +341,12 @@ $modal-break-1: 760px;
 		&__tab {
 			cursor: pointer;
 			color: black;
-			border: 1px solid lightgray;
+			//border: 1px solid lightgray;
 			text-align: center;
 			flex: 1 0 50%;
 			padding: 10px;
+			font-size: 16px;
+			font-weight: 400;
 			&:hover{ 
 				background: whitesmoke;
 				color: black;
@@ -334,7 +355,8 @@ $modal-break-1: 760px;
 	}
 
 	&__box {
-		border: 1px solid lightgray;
+		//border: 1px solid lightgray;
+		
 		border-top: 0px;
 		padding: 30px 20px;
 		background-color: white;
@@ -361,6 +383,8 @@ $modal-break-1: 760px;
 }
 
 .form {
+	width: 80%;
+	margin: auto;
 	&__div {
 		display: flex;
 		flex-direction: column;
@@ -371,31 +395,42 @@ $modal-break-1: 760px;
 		label {
 		color: #5e6c84;
 
-		font-size: 12px;
+		font-size: 14px;
 		}
 	}
 	&__label {
 		color: #5e6c84;
 
-		font-size: 14px;
+		font-size: 16px;
 		font-weight: bold;
 	}
 	&__control {
 		border: none;
 		width: 100%;
 		margin:auto;
-		border: 1px solid lightgrey;
+		height: 60px;
+//		border: 1px solid lightgrey;
 		padding: 10px 0px 10px 10px;
-		font-size: 12px;
+		font-size: 14px;
 		min-width: 200px;
 		border-radius: 5px;
 		outline-color: #dfe1e6;
+		border-color: darkgrey;
+
+		border-radius: 8px;
+		border-width: 1px;
+		border-style: solid;
+		border-image: initial;
+		padding: 0px 10px;
+
+		
 
 		&__submit {
 			border: 2px solid #ffffe6;
 			color: #ffffe6;
-			font-weight: bold;;
+			font-weight: 400;
 			background: black;
+			font-size: 16px;
 			&:hover {
 				background-color: black;;
 				color: white;
@@ -407,7 +442,7 @@ $modal-break-1: 760px;
 }
 .signin-prompt {
 	margin-top: 10px;
-	color: white;
+	color: darkgrey;
 	font-weight: normal;
 	font-size: 13px;
 

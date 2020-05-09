@@ -94,13 +94,14 @@ $break-small: 485px;
 
 .filter {
 	
-	background: rgb(255, 255, 230);
+	//background: rgb(255, 255, 230);
+	background:whitesmoke;
 	//max-height: 200px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	position: sticky;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 2px solid lightgrey;
 	&__container {
 		width: 70%;
 		margin:auto;

@@ -7,6 +7,7 @@
       <div class="navbar__ctas" style="">
         <a class="block text-sm navbar__ctas__item"  @click="toggleModal" v-if="isAuthenticated && pageContext && pageContext == 'home'" style="margin-right: 20px">Create</a>
         <a  @click="login"  style="cursor:pointer" class="inline-block text-sm navbar__ctas__item" v-if="isAuthenticated === false">Sign In</a>
+        <a  @click="login"  style="cursor:pointer" class="inline-block text-sm navbar__ctas__item" v-if="isAuthenticated === false">Create event</a>
 
         <div @click="toggleDropdown" v-if="isAuthenticated" class="navbar__ctas__item" >
           <button style="background:white;" class="block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white">
@@ -27,7 +28,7 @@
       <a @click="toggleModal" v-if="pageContext && pageContext == 'home' && isAuthenticated" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Create Event</a>
       <nuxt-link to="/my_events" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">My Events</nuxt-link>
       <nuxt-link to="/bookmarks" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Bookmarks</nuxt-link>
-      <nuxt-link to="/reminders" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Reminders</nuxt-link>
+      <!--<nuxt-link to="/reminders" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Reminders</nuxt-link>-->
       <nuxt-link to="/settings" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Settings</nuxt-link>
       <a @click="signout" href="#" class="block px-4 py-2 text-gray-800 hover:bg-black hover:text-white">Sign out</a>
     </div>
@@ -68,6 +69,7 @@ export default {
       await requests.logout().then(resp=> {
         this.isAuthenticated = false;
         this.showDropdown = false
+        this.$store.commit('auth/setAuthenticated', 0);
       })
       .catch(err => {
         

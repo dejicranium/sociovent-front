@@ -4,7 +4,8 @@ const baseURL = 'https://sociovent-api.herokuapp.com/v1/api/'
 module.exports = {
   mode: 'universal',
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:1220/api/v1'
+    baseUrl: process.env.BASE_URL || 'http://localhost:1220/api/v1',
+    frontUrl: process.env.FRONT_URL || `http://sociovent.herokuapp.com`
   },
   /*
   ** Headers of the page
@@ -14,7 +15,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+     // { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

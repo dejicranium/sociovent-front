@@ -1,14 +1,14 @@
 <template>
     <div class="paginator">
-        <div class="page-bloc" :class="[pageBlocks[0] ? '' : 'hide' ]">{{pageBlocks[0] ? pageBlocks[0] : ''}} </div>
-        <div class="page-bloc" :class="[pageBlocks[1] ? '' : 'hide' ]">{{pageBlocks[1]  ? pageBlocks[1] : ''}}</div>
-        <div class="page-bloc" :class="[pageBlocks[2] ? '' : 'hide' ]">{{pageBlocks[2]  ? pageBlocks[2] : ''}}</div>
+        <div class="page-bloc" @click="changePage(pageBlocks[0])"  :class="[pageBlocks[0] ? '' : 'hide' ]">{{pageBlocks[0] ? pageBlocks[0] : ''}} </div>
+        <div class="page-bloc" @click="changePage(pageBlocks[1])" :class="[pageBlocks[1] ? '' : 'hide' ]">{{pageBlocks[1]  ? pageBlocks[1] : ''}}</div>
+        <div class="page-bloc" @click="changePage(pageBlocks[2])" :class="[pageBlocks[2] ? '' : 'hide' ]">{{pageBlocks[2]  ? pageBlocks[2] : ''}}</div>
         <div class="page-bloc page-bloc__input" style="display:flex" >
             <input type="number" v-model="page"/>
             <button @click="jumpToMethod(page)">Go</button>
         </div>
 
-        <div class="page-bloc" :class="[pageBlocks[3] ? '' : 'hide' ]">{{pageBlocks[3]}}</div>
+        <div class="page-bloc" @click="changePage(pageBlocks[3])" :class="[pageBlocks[3] ? '' : 'hide' ]">{{pageBlocks[3]}}</div>
     </div>
 </template>
 
@@ -59,7 +59,10 @@ export default {
             }
         },
 
-
+        changePage(page){
+            this.page = page;
+            this.jumpToMethod(this.page)
+        }
     }
 }
 </script>

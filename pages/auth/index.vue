@@ -222,7 +222,7 @@ export default {
 			let queryString = '';
 			let l = document.getElementById('signupButton');
 			const original_text = l.innerText;
-			toggleButtonActiveness(l, original_text)
+			//toggleButtonActiveness(l, original_text)
 
 			if (!this.validateSignupFields()) {
 				return;
@@ -248,7 +248,7 @@ export default {
 					this.loginData.identifier = this.signupData.username;
 					this.loginData.password = this.signupData.password;
 					this.signin();
-					toggleButtonActiveness(l, original_text)
+					//toggleButtonActiveness(l, original_text)
 					if (this.$route.query['action']== 'bookmark' && this.$route.query['event_id']) {
 						eventrequests.bookmarkEvent(this.$route.query['event_id']).then(()=> {
 							//this.event.bookmarks = [0] // just add an item to the list so that bookmarks will stop showing
@@ -258,7 +258,7 @@ export default {
 
 				})
 				.catch(err=> {			
-					toggleButtonActiveness(l, original_text)
+					//toggleButtonActiveness(l, original_text)
 					this.authError = true;
 					if (err.response && err.response.data && err.response.data.message) {
 

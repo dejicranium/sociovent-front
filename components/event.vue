@@ -169,12 +169,12 @@ export default {
 					locals.url = 'whatsapp://send?text=' + text;
 					break;
 				case 'facebook':
-					text = 'Set a reminder for ' + this.event.venue + ' event: ' + this.event.name + '. ' + process.env.frontUrl +'/events/'+ this.event.slug ;
+					text = 'Set a reminder for ' + this.event.venue + ' event: ' + this.event.name + '. ';
 					event_url = process.env.frontUrl +'/events/'+ this.event.slug 
 					locals.url = `http://www.facebook.com/sharer.php?u=${event_url}&t=${text}`;
 					break;
 				case 'twitter': 
-					text = 'Set a reminder for ' + this.event.venue + ' event: ' + this.event.name + '. ' + process.env.frontUrl +'/events/'+ this.event.slug ;
+					text = 'Set a reminder for ' + this.event.venue + ' event: ' + this.event.name + '. ' ;
 					event_url = process.env.frontUrl +'/events/'+ this.event.slug 
 					locals.url = `http://twitter.com/share?text=${text}&url=${event_url}&hashtags=sociovent,sociovent,sociovent`;
 					break;

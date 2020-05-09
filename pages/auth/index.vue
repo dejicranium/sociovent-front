@@ -42,7 +42,7 @@
 							<input type="text" class="form__control" v-model="signupData.twitter_handle" placeholder="">
 						</div>
 						<div class="form__div">
-							<button id="signupButton" type="submit" class="form__control form__control__submit" >Sign up</button>
+							<button id="signupButton" type="button" class="form__control form__control__submit" >Sign up</button>
 						</div>
 
 					</form>
@@ -60,7 +60,7 @@
 							<input type="password" v-model="loginData.password" class="form__control" placeholder="">
 						</div>
 						<div class="form__div">
-							<button  id="signinButton" type="submit" class="form__control form__control__submit">Sign in</button>
+							<button  id="signinButton" type="button" class="form__control form__control__submit">Sign in</button>
 						</div>
 
 					</form>
@@ -221,7 +221,7 @@ export default {
 			this.authErrorMessage = '';
 			let queryString = '';
 			let l = document.getElementById('signupButton');
-			const original_text = l.innerText;
+			//const original_text = l.innerText;
 			//toggleButtonActiveness(l, original_text)
 
 			if (!this.validateSignupFields()) {

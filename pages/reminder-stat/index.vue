@@ -20,9 +20,9 @@
 				<div v-if="error === true">
 					<p>An error occurred</p>
 				</div>
-				<div v-else>
+				<div v-else-if="error === false &&event">
 					<p style="margin-bottom: 10px;">
-						Reminder set for {{event.name}}
+						Reminder set for {{ event.name }}
 					</p>
 
 					<a style="color:blue" href="#" @click="gobacktoevent(event.slug)">Go back to event</a>
@@ -40,8 +40,6 @@ import Logo from '~/components/Logo.vue'
 import SocialAuth from '~/components/socialauth.vue';
 import Event from '~/components/event.vue';
 import Navbar from '~/components/navbar.vue';
-import EventsFilter from '~/components/filter.vue';
-import DatePick from 'vue-date-pick';
 import 'vue-date-pick/dist/vueDatePick.css';
 import cntries from '../../countries.json';
 import VueTimepicker from 'vue2-timepicker';

@@ -121,8 +121,8 @@ $breaklarge: 1200px;
 
       &__item {
         margin-right: 30px;
-        flex: 1 0 19%;
-        margin-right: 5px;
+       // flex: 1 0 19%;
+        //margin-right:1px;
         &:last-of-type {
           margin-right: 0;
         }

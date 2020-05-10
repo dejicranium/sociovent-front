@@ -15,10 +15,11 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      script: [
-        { src: 'https://www.googletagmanager.com/gtag/js?id=UA-165985781-1', defer: true }
-      ],
+      
      // { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+    ],
+    script: [
+      { src: 'https://www.googletagmanager.com/gtag/js?id=UA-165985781-1', defer: true }
     ],
     link: [
       { rel: 'stylesheet', href: '/vue-loading.css' },

@@ -15,6 +15,9 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      script: [
+        { src: 'https://www.googletagmanager.com/gtag/js?id=UA-165985781-1', defer: true }
+      ],
      // { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
@@ -42,7 +45,14 @@ module.exports = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-analytics'
   ],
+
+  googleAnalytics: {
+    id: 'UA-12301-2'
+
+  },
+
 
   modules: [
   ],

@@ -104,9 +104,10 @@ export default {
     head () {
         return {
         title: this.event.name,
+        /*
         script: [
             { src: 'https://www.googletagmanager.com/gtag/js?id=UA-165985781-1', defer: true }
-        ],
+        ],*/
         meta: [
             {
                 name: 'twitter:title',

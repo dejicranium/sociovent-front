@@ -12,7 +12,7 @@
   },
   "engines": {
     "npm": "6.x",
-    "node": "12.x",
+    "node": "12.x"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.10.0",

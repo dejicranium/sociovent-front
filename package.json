@@ -11,7 +11,7 @@
     "generate": "nuxt generate"
   },
   "engines": {
-    "node": "12.16.x"
+    "node": "12.x"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.10.0",

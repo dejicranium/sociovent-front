@@ -12,8 +12,8 @@
                     <div class="content__event">
                         <div class="content__event__image">
                             <img class="content__event__photo" :src="event.photo"/>
-                            <div class="content__event__name">{{ event.name || ''}} <p>on {{ event.start_time | normalizeDate }}</p></div>
                         </div>
+                        <div class="content__event__name">{{ event.name || ''}} <p>on {{ event.start_time | normalizeDate }}</p></div>
 
                         <div class="content__event__action">
                             <div class="content__event__action__container">
@@ -85,8 +85,10 @@ import utils from '../../utils';
 
 import { request, checkAuthStatus, toggleButtonActiveness } from '../../utils';
 
+if (process.browser){
 
-utils.googleAnalytics();
+    utils.googleAnalytics();
+}
 
 export default {
 	components: {
@@ -104,8 +106,7 @@ export default {
     head () {
         return {
         title: this.event.name,
-        /*
-        script: [
+       /* script: [
             { src: 'https://www.googletagmanager.com/gtag/js?id=UA-165985781-1', defer: true }
         ],*/
         meta: [
@@ -356,7 +357,7 @@ $break-point-1: 860px;
     &__container {
         width: 70%;
         margin: auto;
-        background: white;
+        background: url('../../static/abstract.jpg');
         border-radius: 3px;
 	    border: 1px solid #dfe1e6;
         font-size: 14px;
@@ -370,12 +371,14 @@ $break-point-1: 860px;
 
         &__image {
             border-radius: 10px;
-            background-color:white;
+            background-color:transparent;
             position: relative;
-            height: 600px;
+            max-height: 400px;
+            height: 400px;
 
             @media screen and (max-width: $break-point-1) {
-                height: 300px
+                max-height: 300px;
+                height: 300px;
             }
             img {
                 border-top-left-radius: 3px;
@@ -383,6 +386,8 @@ $break-point-1: 860px;
 			    max-height: 600px;
                 height: 100%;
                 width: 100%;
+                background-color:transparent;
+
                 object-fit: contain;
 
                 @media screen and (max-width: $break-point-1) {
@@ -409,6 +414,7 @@ $break-point-1: 860px;
                 margin: auto;
                 padding: 10px 20px;
                 flex-wrap: wrap;
+
 
                 @media screen and (max-width: $break-point-1) {
                     object-fit: contain;
@@ -456,16 +462,16 @@ $break-point-1: 860px;
         }
 
         &__name {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+          //  position: absolute;
+           // bottom: 0;
+           // left: 0;
+           // right: 0;
             width: 100%;
             text-align: center;
-            background: rgba(0, 0, 0, 0.513);
+            background: rgba(0, 0, 0, 0.687);
             font-size: 20px;
             padding: 30px 10px;
-            color: rgb(216, 213, 213);
+            color: rgb(250, 250, 250);
         }
         p, a {
             padding: 0px 10px;
@@ -515,7 +521,10 @@ $break-point-1: 860px;
 .suggestion {
     display: flex;
     color: #5e6c84;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
+    background: white;
+    border-bottom: 1px solid whitesmoke;
+    border-radius: 5px;
     &:hover {
         cursor:pointer;
     }

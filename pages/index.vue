@@ -58,7 +58,12 @@
 
 							<label for="" class="modal__body__formfield__label">Host country *</label>
 							<select class="modal__body__formfield__input" v-model="event.country_origin">
-								<option v-for="country in countries" :value="country.code">{{country.name}}</option>
+								<option value="" disabled selected>Select country</option>
+								<option value="NG">Nigeria</option>
+								<option value="GH">Ghana</option>
+								<option value="KE">Kenya</option>
+								<option value="ZA">South Africa</option>
+								<option value="US">United States</option>							
 							</select>
 						</div>
 						<div class="modal__body__formfield">
@@ -297,14 +302,9 @@ export default {
 	},
 
 	async created() {
-		utils.setSessionId();
 		let query = {};
 		if (this.$route.query) {
 			query = this.$route.query;
-		}
-		//this.routeEnterAction = this.$route.query['action'];
-		if (this.routeEnterAction == 'createEvent') {
-			this.showModal = true;
 		}
 		
 		// check if filter elements are in the query.
@@ -329,12 +329,14 @@ export default {
 			this.filter['country_origin'] = 'NG'
 		}
 
+		
+		this.getEvents(query)
+
 		let authstatus = await checkAuthStatus();
 		this.$store.commit('auth/setAuthenticated', authstatus);
 
-		this.getEvents(query)
+		utils.setSessionId();
 
-	
 	},
 
 

@@ -260,6 +260,7 @@ $grid-break-2: 565px;
 	padding-bottom:15px;
 	box-shadow: 0px 2px 2px rgba(140, 134, 134, 0.25);
     flex: 1 0 19%;
+	outline: none;
 	//max-width: 19%;
     margin-right: 5px;
     margin-bottom: 15px;

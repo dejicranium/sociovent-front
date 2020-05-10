@@ -26,7 +26,11 @@
 
 						<select class="filter__field__input" v-model="filter.country_origin" type="text" >
                             <option value="" disabled selected>Select country</option>
-							<option :value="country.code" v-for="country in countries">{{country.name}}</option>
+							<option value="NG">Nigeria</option>
+							<option value="GH">Ghana</option>
+							<option value="KE">Kenya</option>
+							<option value="ZA">South Africa</option>
+							<option value="US">United States</option>
 						</select>
 										
 					</div>
@@ -169,7 +173,7 @@ input, /deep/input {
 }
 
 input:focus {
-	background-color: white !important;
+	background-color: black !important;
 }
 
 /deep/.vdpPositionTop.vdpPositionLeft {

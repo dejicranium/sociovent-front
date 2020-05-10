@@ -83,7 +83,7 @@ export default {
     
     cursor: pointer;
     padding: 4px 8px;
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
     margin-right: 5px;
     border-radius: 2px;
     &:hover {

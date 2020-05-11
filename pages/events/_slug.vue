@@ -345,19 +345,21 @@ $break-point-1: 860px;
 .contain {
     min-height: 100vh;
     display: flex;
-    background: #EEEEEE;
+    background: rgba(0, 0, 92, 0.05);
     flex-direction:column;
+        padding-top: 140px;
+
 }
 
 .content { 
-    padding-top: 70px;
     flex: 1 0 75%;
     
     
     &__container {
         width: 70%;
         margin: auto;
-        background: url('../../static/abstract.jpg');
+        background:  white url('../../static/abstract.jpg');
+        opacity: 1.5;
         border-radius: 3px;
 	    border: 1px solid #dfe1e6;
         font-size: 14px;
@@ -468,10 +470,11 @@ $break-point-1: 860px;
            // right: 0;
             width: 100%;
             text-align: center;
-            background: rgba(0, 0, 0, 0.687);
+            //background: rgba(0, 0, 0, 0.687);
+background: linear-gradient(40deg, rgba(228,63,90,1) 0%, rgba(27,27,47,0.36318277310924374) 54%);
             font-size: 20px;
             padding: 30px 10px;
-            color: rgb(250, 250, 250);
+            color: white;
         }
         p, a {
             padding: 0px 10px;

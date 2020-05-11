@@ -76,7 +76,7 @@
 							<label for="" class="modal__body__formfield__label --red">{{eCreateErrors.photo}}</label>
 							<label for="" class="modal__body__formfield__label">Event Photo</label>
 
-							<input type="file" name="eventimage" accept="image/x-png,image/gif,image/jpeg">
+							<input type="file" name="eventimage" style="border:0;" accept="image/x-png,image/gif,image/jpeg">
 						</div>
 
 						<div class="modal__body__ctas flex items-center">
@@ -109,10 +109,10 @@
 
 
 		<div v-else style="position: relative; z-index: 1;top:60px; margin:auto; " class="content">
-			<div class="filter-indicator" @click="toggleFilter" v-if="!openFilter"> 
+			<!--<div class="filter-indicator" @click="toggleFilter" v-if="!openFilter"> 
 				<svg class="filter-indicator__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="42" viewBox="0 0 50 42"><defs><style>.cls-1{fill:#111}.cls-2{fill:#00c569}</style></defs><title>Options</title><g id="Layer_2" data-name="Layer 2"><g id="Options"><path class="cls-1" d="M40.5 12h7a2.5 2.5 0 0 0 0-5h-7a2.5 2.5 0 0 0 0 5zM15.5 7h-13a2.5 2.5 0 0 0 0 5h13a2.5 2.5 0 0 0 0-5zM9.5 30h-7a2.5 2.5 0 0 0 0 5h7a2.5 2.5 0 0 0 0-5zM47.5 30h-13a2.5 2.5 0 0 0 0 5h13a2.5 2.5 0 0 0 0-5z"/><g><path class="cls-2" d="M18.5 23a9.5 9.5 0 1 0 9.5 9.5 9.5 9.5 0 0 0-9.5-9.5zm0 14a4.5 4.5 0 1 1 4.5-4.5 4.51 4.51 0 0 1-4.5 4.5zM31.5 0A9.5 9.5 0 1 0 41 9.5 9.5 9.5 0 0 0 31.5 0zm0 14A4.5 4.5 0 1 1 36 9.5a4.51 4.51 0 0 1-4.5 4.5z"/></g></g></g></svg>
-			</div>
-			<events-filter v-if="!loadingContent" :filterMethod='filterEvents' :show="openFilter" :closeMethod="toggleFilter" :filter="filter"></events-filter>
+			</div>-->
+			<!--<events-filter v-if="!loadingContent" :filterMethod='filterEvents' :show="openFilter" :closeMethod="toggleFilter" :filter="filter"></events-filter>-->
 
 			<div class="cont2">
 				<div class="feed__box__body" >
@@ -140,7 +140,7 @@
 
 
 			</div> 
-			<div @click="viewMore" v-if="pageMeta.currentPage !== pageMeta.totalPages" class="view-more" style="width:50%; max-width: 300px; background: black; padding: 5px; border-radius: 5px; cursor: pointer; margin:auto; margin-bottom: 20px; text-align: center; border: 1px solid black; color: white;">
+			<div @click="viewMore" v-if="pageMeta.currentPage !== pageMeta.totalPages" class="view-more" style="width:50%; max-width: 300px; background: #1b1b2f; padding: 5px; border-radius: 5px; cursor: pointer; margin:auto; margin-bottom: 20px; text-align: center; color: white;">
 				View More
 			</div>
 			<pagination :pageMeta="pageMeta" :jumpToMethod="changePage"></pagination>
@@ -607,7 +607,8 @@ $modal-break-1: 760px;
 .cont {
   min-height: 100vh;
   display: flex;
-  background: #EEEEEE;
+  //padding-top: 45px;
+  //background: #EEEEEE;
   flex-direction:column;
 
 }
@@ -666,48 +667,6 @@ $modal-break-1: 760px;
 	}
 }
 
-
-.event {
-	font-size: 13px;
-	background: #FFFFFF;
-	box-shadow: 0 16px 64px -16px rgba(46,55,77,.1);
-	cursor: pointer;
-	border: 1px solid whitesmoke;
-	border-radius: 5px;
-	padding-bottom:15px;
-	box-shadow: 0px 2px 2px rgba(140, 134, 134, 0.25);
-
-	&:hover {
-		box-shadow: 0px 0px 0px rgba(140, 134, 134, 0.25);
-
-	}
-	&__image {
-		
-		img {
-			width: 100%;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
-			margin-bottom: 5px;
-			height: 250px;
-			object-fit: cover;
-		}
-	}
-
-	&__details {
-		padding: 2px 10px;
-
-		&__text {
-
-			&__name {
-				font-size: 15px;
-				font-weight: 600;
-			}
-		}
-	}
-
-	
-	
-}
 
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
@@ -790,9 +749,9 @@ $modal-break-1: 760px;
 			
 
 			label {
-				color: #5e6c84;
-					font-size: 12px;
-					font-weight: 600;			
+				color: black;
+				font-size: 12px;
+				font-weight: 600;			
 			
 			}
 
@@ -811,18 +770,22 @@ $modal-break-1: 760px;
 				font-size: 13px;
 				padding: 12px 10px;
 				border-radius: 5px;
-				outline: teal;
 				//background-color: #f4f5f7 !important;
    			 	//border: 1px solid #dfe1e6 !important;
+				//outline: 1px solid #e43f5a;
+
 				border: 1px solid lightgrey;
 				input {
 					//background: #f4f5f7 !important;
 				}
 				&:active {
 					background: white;
+					//border: 1px solid #e43f5a;
 				}
 				&:focus {
 					background: white;
+					outline: 1px solid #e43f5a;
+
 				}
 			}
 
@@ -846,7 +809,7 @@ $modal-break-1: 760px;
 			}
 
 			.create {
-				background: black;
+        		background: #e43f5a;
 				color: white;
 			}
 			
@@ -862,10 +825,20 @@ $modal-break-1: 760px;
 }
 .content {
  position: relative;
- top: 60px;
+ //top: 60px;
+ padding-top: 50px;
  width: 100%;
  margin: auto;
+padding-left: 40px;
 
+
+$grid-break-2: 565px;
+
+@media screen and (max-width: $grid-break-2) {
+				padding-left: 0;
+				//max-width: 55%;
+
+}
 }
 
 input {
@@ -886,6 +859,11 @@ input:focus {
 	color: #172b4d;
 	font-size: 13px;
 	height: 100%;
+				&:focus {
+					background: white;
+					outline: 1px solid #e43f5a;
+
+				}
 
 }
 select {

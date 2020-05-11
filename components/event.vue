@@ -252,22 +252,25 @@ $grid-break-2: 565px;
 
 .event {
 	font-size: 13px;
-	background: #FFFFFF;
-	box-shadow: 0 16px 64px -16px rgba(46,55,77,.1);
-	cursor: pointer;
-	border: 1px solid whitesmoke;
+	background: rgb(255, 255, 255);
+	/* authshadow/1 */
+
+	box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.05);
 	border-radius: 5px;
+	//background: #FFFFFF;
+	//@at-rootbox-shadow: 0 16px 64px -16px rgba(46,55,77,.1);
+	cursor: pointer;
+	//border: 1px solid whitesmoke;
+	//border-radius: 5px;
 	padding-bottom:15px;
-	box-shadow: 0px 2px 2px rgba(140, 134, 134, 0.25);
-    flex: 1 0 19%;
-	outline: none;
-	//max-width: 19%;
-    margin-right: 5px;
-    margin-bottom: 15px;
+	//box-shadow: 0px 2px 2px rgba(140, 134, 134, 0.25);
+    flex: 1 0 20%;
+    margin-right: 40px;
+    margin-bottom: 40px;
 	position: relative;
 
 			@media screen and (max-width: $grid-break-2) {
-				flex: 1 0 55%;
+				flex: 1 0 95%;
 				margin-right: 0;
 				//max-width: 55%;
 
@@ -279,25 +282,25 @@ $grid-break-2: 565px;
       		}
 			
 			@media screen and (min-width: $grid-break-3) {
-                flex: 1 0 25%;
+                flex: 1 0 30%;
 				//max-width: 25%;
 
       		}
 			@media screen and (min-width: $grid-break-4) {
-                flex: 1 0 20%;
+                flex: 1 0 30%;
 				//max-width: 20%;
 
 			}
 
 			@media screen and (min-width: $grid-break-5) {
-                flex: 1 0 19%;
-				max-width: 19%;
+              //  flex: 1 0 19%;
+			//	max-width: 19%;
 
       		}
 
 
 	&:hover {
-		box-shadow: 0px 0px 0px rgba(140, 134, 134, 0.25);
+		//box-shadow: 0px 0px 0px rgba(140, 134, 134, 0.25);
 
 	}
 

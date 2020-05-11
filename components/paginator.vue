@@ -100,7 +100,7 @@ export default {
     }
     button {
         padding: 3px 5px;
-        background: black;
+        background: #e43f5a;
         color: white;
     }
 }

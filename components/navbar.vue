@@ -2,12 +2,12 @@
   <div>
 		<nav class="navbar flex items-center justify-between flex-wrap bg-white">
 			<div class="flex items-center flex-shrink-0 text-white">
-				<span class="font-semibold text-xl tracking-tight"><nuxt-link to="/">Sociovent</nuxt-link></span>
+				<span class="font-semibold text-xl tracking-tight logo"><nuxt-link to="/">Sociovent</nuxt-link></span>
 			</div>
       <div class="navbar__ctas" style="">
-        <a class="block text-sm navbar__ctas__item"  @click="toggleModal" v-if="isAuthenticated && pageContext && pageContext == 'home'" style="margin-right: 20px">Create</a>
-        <a  @click="login"  style="cursor:pointer" class="inline-block text-sm navbar__ctas__item" v-if="isAuthenticated === false">Sign In</a>
-        <a  @click="login"  style="cursor:pointer" class="inline-block text-sm navbar__ctas__item" v-if="isAuthenticated === false">Create</a>
+        <a class="block text-l navbar__ctas__item"  @click="toggleModal" v-if="isAuthenticated && pageContext && pageContext == 'home'" style="margin-right: 20px">Create</a>
+        <a  @click="login"  style="cursor:pointer" class="inline-block text-m navbar__ctas__item" v-if="isAuthenticated === false">Sign In</a>
+        <a  @click="login"  style="cursor:pointer" class="inline-block text-m navbar__ctas__item" v-if="isAuthenticated === false">Create</a>
 
         <div @click="toggleDropdown" v-if="isAuthenticated" class="navbar__ctas__item" >
           <button style="background:white;" class="block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white">
@@ -95,21 +95,31 @@ $breaklarge: 1200px;
     right: 0;
     top: 50px;
 }
+.logo {
+  color: white;;
+  font-weight: 600;
+  font-size: 20px;
+
+}
 .navbar {
     width: 100%;
     top: 0;
     float: left;
-    height: 60px;
     position: fixed;
     width: 100%;
     z-index: 5;
     padding: 20px 20px;
-    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.04);
+    //box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.04);
     z-index: 50;
-    background: black;
+   // background: black;
     left: 0;
     color: white;
     position: fixed;
+    background: #1b1b2f;
+    color: white;
+  
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
 
     &__ctas{
       display: flex;

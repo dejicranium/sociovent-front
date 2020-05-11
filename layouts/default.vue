@@ -25,9 +25,10 @@ html {
 }
 
 .stuff {
-  background-color: #EEEEEE;
   height: 100vh;
   overflow:scroll;
+  position: relative;
+  background: rgba(0, 0, 92, 0.05);
 }
 
 .button--green {

@@ -826,7 +826,7 @@ $modal-break-1: 760px;
 .content {
  position: relative;
  //top: 60px;
- padding-top: 50px;
+ padding-top: 45px;
  width: 100%;
  margin: auto;
 padding-left: 40px;

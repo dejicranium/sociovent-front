@@ -108,7 +108,7 @@ $breaklarge: 1200px;
     position: fixed;
     width: 100%;
     z-index: 5;
-    padding: 20px 20px;
+    padding: 15px 20px;
     //box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.04);
     z-index: 50;
    // background: black;

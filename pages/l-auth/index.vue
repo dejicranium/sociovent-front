@@ -1,21 +1,14 @@
 <template>
-    <div class="wrapper">
-        <div class="sidebar">
-            <div class="sidebar-wrapper">
-                <p class="sidebar__header">Sociovent</p>
-                <p class="sidebar__body__header">Create social media events</p>
-                <p class="sidebar__body__desc">Get discovered, share with your network and potential sponsors</p>
-                <nuxt-link to="#" class="sidebar__body__link">Privacy Policy</nuxt-link>
-            </div>
-        </div>
-        <div class="content">
+	<div class="contain">
+		<div class="contain--1">
+			<img src="../../static/af.png" width="200" height="200" alt="">
 			<div class="auth">
 				<div class="auth__tabs">
-					<div class="auth__tabs__tab" :class="[authMode == 1 ? 'isActive' : '']" @click="switchAuthMode">Log in</div>
-					<div class="auth__tabs__tab" :class="[authMode == 0 ? 'isActive' : '']"   @click="switchAuthMode">Sign Up</div>
+					<div class="auth__tabs__tab" :class="[authMode == 1 ? 'isActive' : '']" style="border-right:0" @click="switchAuthMode">Log in</div>
+					<div class="auth__tabs__tab" :class="[authMode == 0 ? 'isActive' : '']"   style="border-lefts:0" @click="switchAuthMode">Sign Up</div>
 				</div>
 				<div class="auth__signup auth__box" v-if="authMode == 0">
-					<!--<p class="auth__header">Create your Sociovent account</p>-->
+					<label class="auth__box__label"></label>
 					<label class="auth__box__error" v-if="authErrorMessage">{{ authErrorMessage }}</label>
 
 					<form  class="form" @submit.prevent="signup">
@@ -38,7 +31,6 @@
 
 							<input type="password" class="form__control" v-model="signupData.password" placeholder="">
 						</div>
-                        <!--
 						<div class="form__div">
 							<label>Instagram Handle</label>
 
@@ -48,7 +40,7 @@
 							<label>Twitter Handle</label>
 
 							<input type="text" class="form__control" v-model="signupData.twitter_handle" placeholder="">
-						</div>-->
+						</div>
 						<div class="form__div">
 							<button id="a" type="button" class="form__control form__control__submit" @click="signup">Sign up</button>
 						</div>
@@ -57,8 +49,6 @@
 
 				</div>
 				<div class="auth__signup auth__box" v-else>
-					<!--<p class="auth__header">Sign in to Sociovent</p>-->
-
 					<label class="auth__box__error" v-if="authErrorMessage">{{ authErrorMessage }}</label>
 					<form class="form" @submit.prevent="signin">
 						<div class="form__div">
@@ -76,13 +66,14 @@
 					</form>
 
 				</div>
-				<!--<p class="signin-prompt" v-if="authMode == 0"> Already have an account? <a href="#" @click="switchAuthMode">Sign In</a></p>
-				<p class="signin-prompt" v-else> Don't have an account? <a href="#" @click="switchAuthMode">Sign Up</a></p>-->
+				<p class="signin-prompt" v-if="authMode == 0"> Already have an account? <a href="#" @click="switchAuthMode">Sign In</a></p>
+				<p class="signin-prompt" v-else> Don't have an account? <a href="#" @click="switchAuthMode">Sign Up</a></p>
 			</div>
-        </div>
-    </div>
-</template>
+		</div>
 
+			
+	</div>
+</template>
 
 <script>
 import Logo from '~/components/Logo.vue'
@@ -90,8 +81,9 @@ import axios from 'axios'
 import { request, checkAuthStatus, toggleButtonActiveness } from '../../utils';
 import Cookies from 'js-cookie';
 import eventrequests from '../../requests/events';
+
 export default {
-    	components: {
+	components: {
 		Logo
 	},
 	data() {
@@ -291,237 +283,196 @@ export default {
 		
 	}
 }
+
 </script>
 
-
 <style lang="scss" scoped>
-$break-point-1: 1000px;
-$break-point-2: 860px;
+$grid-break-5: 1120px;
+$grid-break-4: 830px;
+$grid-break-3: 630px;
+$grid-break-2: 565px;
+$modal-break-1: 760px;
+$primary-color: #1b1b2f;
 
 
-
-.wrapper {
-    //background: white;
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 100%;;
-    background:white;
-    justify-content: space-between;
-	@media screen and (max-width: $break-point-1) {
-		position: fixed;
-		width: 100%;
-		height: 100px;
-		flex-direction: column;
-	}
-      
-	  
-	
-    
+/* Sample `apply` at-rules with Tailwind CSS
+.container {
+  @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
-.sidebar {
-    background: url('../../static/abstract.jpg');
-    
-    position: fixed;
-    top: 0;
-	left: 0;
-    width: 30%;
-    height: 100vh;
-    box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.05);
-	
-	@media screen and (max-width: $break-point-1) {
-		position: fixed;
-		width: 100%;
-		height: 300px;	
-	}
+*/
 
-
-    &-wrapper {
-        background: rgba(0, 0, 92, 0.75);;
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 100%;
-        box-shadow: 10px 10px 11px rgba(0, 0, 0, 0.05);
-        padding: 20px 30px;
-        color: white;
-        width:100%;
-		@media screen and (max-width: $break-point-1) {
-			width: 100%;
-			height: 300px;	
-			text-align: center;
-		}
-
-    }
-    &__header {
-        font-weight: 600;
-        color: white;
-        box-shadow: 10px 10px 11px rgba(0, 0, 0, 0.05);
-        padding: 10px 0px;
-        font-size: 36px;
-    }
-    &__body {
-        &__header {
-            margin-top:200px;
-            font-weight: 500;
-            font-size: 26px;
-            margin-bottom: 20px;
-			@media screen and (max-width: $break-point-1) {
-				width: 100%;
-				height: 100px;	
-				text-align: center;
-				display: none;
-			}
-        }
-        &__desc {
-           font-size: 18px;
-           max-width: 300px;
-           @media screen and (max-width: $break-point-1) {
-				width: 100%;
-				height: 100px;	
-				text-align: center;
-				display: none;
-			}
-        }
-        &__link {
-            position: absolute;
-            bottom: 20px;
-			@media screen and (max-width: $break-point-1) {
-				width: 100%;
-				height: 100px;	
-				text-align: center;
-				display: none;
-			}
-        }
-    }
-
+* {
 }
 
-.content {
-    width: 70%;
-	height: 100%;
-	
-	@media screen and (max-width: $break-point-2) {
-		width: 85%;
+.contain {
+	background-size: contain;
+	margin: 0 auto;
+  	min-height: 100vh;
+  	display: flex;
+	width: 40%;
+  	justify-content: center;
+  	align-items: center;
+	 // background: $primary-color !important;
+  	text-align: center;
 
+	&--1{
+		z-index: 400;
+		width: 100%;
 	}
+}
 
-	@media screen and (min-width: $break-point-1) {
-		position: absolute;
-		right: 0;
-		top: 0;
-		bottom:0;
-		padding: 120px 20px 0px 20%;
-	}
-	@media screen and (max-width: $break-point-1) {
-		margin:auto;
-		z-index: 1000;
-		background-color: white;
-		margin-top: 150px;
-	}
+.title {
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  display: block;
+  font-weight: 300;
+  font-size: 100px;
+  color: #35495e;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-size: 42px;
+  color: #526488;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+}
+
+.links {
+  padding-top: 15px;
 }
 
 .auth {
-    width: 70%;
 
-	@media screen and (max-width: $break-point-1) {
-		width: 100%;
-		padding: 20px;
+	border-radius: 10px;
+		@media screen and (max-width: $modal-break-1) {
+			width: 80%;
+		}
+
+	&__tabs {
 		background: white;
-	}
-	&__header {
-		font-size: 25px;
-		margin-bottom: 40px;
-		color: #C060A1;
-	}
-    &__tabs {
-        display: flex;
-        justify-content: space-between;
+		display: flex;
+		justify-content: space-between;
 
-        &__tab {
-            font-size: 20px;
-            width: 100%;
-            font-weight: 500;
-            cursor: pointer;
-            padding: 12px 15px ;
-            box-shadow: 10px 4px 11px rgba(0, 0, 0, 0.05);
-            color: rgb(45, 44, 44);
-            background: #FBFBFB;
-            text-align: center;
-
-			@media screen and (max-width: $break-point-2) {
-				font-size:16px;
-
+		&__tab {
+			cursor: pointer;
+			color: black;
+			//border: 1px solid lightgray;
+			text-align: center;
+			flex: 1 0 50%;
+			padding: 10px;
+			font-size: 16px;
+			font-weight: 400;
+			&:hover{ 
+				background: whitesmoke;
+				color: black;
 			}
-           
-        }
-    }
-    &__box {
-        padding-top:40px;
+		}
+	}
 
-        &__error {
-            margin-bottom: 40px;
-            display: block;
-            font-size: 14px;
-            color: red;
-        }
-    }
+	&__box {
+		//border: 1px solid lightgray;
+		
+		border-top: 0px;
+		padding: 30px 20px;
+		background-color: white;
+		box-sizing: border-box;
+		width: 100%;
+		@media screen and (max-width: $modal-break-1) {
+			padding: 30px 10px;
+		}
+    
+		&__label {
+			color: black;
+			margin-bottom: 20px;
+			display: block;
+			font-size: 20px;
+		}
+
+		&__error {
+			font-size: 12px;
+			color: red;
+			margin-bottom: 5px;
+			display: block;
+		}
+	}
 }
 
 .form {
-        position: relative;
-        display: block;
-    &__div {
-        display: flex;
-        flex-direction: column;
+	width: 80%;
+	margin: auto;
+	&__div {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 10px;
+		margin-bottom: 20px;
 
-        label {
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 16px;
-            margin-bottom: 8px;
+		label {
+		color: #5e6c84;
 
-            color: #757575;
-        }
+		font-size: 14px;
+		}
+	}
+	&__label {
+		color: #5e6c84;
 
-        input {
-            background: white;
-            border: 4px solid rgba(0, 0, 0, 0.09);
-            box-sizing: border-box;
-            border-radius: 5px;
-            height: 48px;
-            margin-bottom: 25px;
-            padding-left: 10px;
+		font-size: 16px;
+		font-weight: bold;
+	}
+	&__control {
+		border: none;
+		width: 100%;
+		margin:auto;
+		height: 60px;
+//		border: 1px solid lightgrey;
+		padding: 10px 0px 10px 10px;
+		font-size: 14px;
+		min-width: 200px;
+		border-radius: 5px;
+		outline-color: #dfe1e6;
+		border-color: darkgrey;
 
-            &:active {
-                outline: 0;
-            }
-            &:focus {
-                outline:0;
-            }
-        }
+		border-radius: 8px;
+		border-width: 1px;
+		border-style: solid;
+		border-image: initial;
+		padding: 0px 10px;
 
-        button {
-            background: rgba(0, 0, 92, 0.75);;
-            height:48px;
-            text-align: center;
-            vertical-align: center;
-            font-size: 16px;
-            color: white;
-            margin-top: 8px;
-			border-radius: 5px;
+		
 
-			margin-bottom:120px;
-			@media screen and (max-width: $break-point-2) {
-				margin-bottom:40px;
+		&__submit {
+			border: 2px solid #ffffe6;
+			color: #ffffe6;
+			font-weight: 400;
+			background: black;
+			font-size: 16px;
+			&:hover {
+				background-color: black;;
+				color: white;
+				font-weight: bold;;
 
 			}
-        }
-    }
+		}
+	}
+}
+.signin-prompt {
+	margin-top: 10px;
+	color: darkgrey;
+	font-weight: normal;
+	font-size: 13px;
+
+	a {
+		text-decoration: underline;
+	}
 }
 
 .isActive {
-    background: white;
-    color: rgba(0, 0, 92, 0.75);;
+	background: black;
+	color: white;
+}
+.red {
+	color: rgb(151, 144, 144);
 }
 </style>

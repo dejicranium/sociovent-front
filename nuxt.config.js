@@ -24,7 +24,8 @@ module.exports = {
     link: [
       { rel: 'stylesheet', href: '/vue-loading.css' },
       { rel: 'stylesheet', href: '/vueDatePick.css' },
-      { rel: 'stylesheet', href: '/VueTimepicker.css' }
+      { rel: 'stylesheet', href: '/VueTimepicker.css' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat' }
     ]
   },
   /*

@@ -1,6 +1,5 @@
 # sociovent
-
-> My primo Nuxt.js project
+Frontend for sociovent.com
 
 ## Build Setup
 
